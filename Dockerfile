@@ -590,7 +590,7 @@ RUN cd /tmp && \
     /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-4.1.11-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
-    $CONDA_DIR/bin/conda install python=2.7 qiime matplotlib=1.4.3 mock nose vsearch=2.6.0 sra-tools mothur -c bioconda && \
+    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime matplotlib=1.4.3 mock nose vsearch=2.6.0 sra-tools mothur -c bioconda && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
@@ -598,7 +598,7 @@ RUN cd /tmp && \
 # Install qiime2
 RUN cd /tmp && \
     wget --quiet https://data.qiime2.org/distro/core/qiime2-2018.2-py35-linux-conda.yml && \
-    $CONDA_DIR/bin/conda env create -n qiime2-2018.2 --file qiime2-2018.2-py35-linux-conda.yml && \
+    $CONDA_DIR/bin/conda env create --quiet -n qiime2-2018.2 --file qiime2-2018.2-py35-linux-conda.yml && \
     rm qiime2-2018.2-py35-linux-conda.yml && \
     conda clean -tipsy
 
