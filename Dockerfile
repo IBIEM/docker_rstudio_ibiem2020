@@ -580,6 +580,16 @@ RUN Rscript -e "install.packages(pkgs = c('argparse','phangorn','ips'), \
     Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
+RUN cd /tmp && \
+    wget https://github.com/torognes/vsearch/archive/v2.7.2.tar.gz && \
+    tar xzf v2.7.2.tar.gz && \
+    cd vsearch-2.7.2 && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf /tmp/v2.7.2.tar.gz /tmp/vsearch-2.7.2
+
 USER $RSTUDIO_USER
 
 # Install conda as $RSTUDIO_USER
@@ -601,16 +611,6 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda env create --quiet -n qiime2-2018.2 --file qiime2-2018.2-py35-linux-conda.yml && \
     rm qiime2-2018.2-py35-linux-conda.yml && \
     conda clean -tipsy
-
-RUN cd /tmp && \
-    wget https://github.com/torognes/vsearch/archive/v2.7.2.tar.gz && \
-    tar xzf v2.7.2.tar.gz && \
-    cd vsearch-2.7.2 && \
-    ./autogen.sh && \
-    ./configure && \
-    make && \
-    make install && \
-    rm -rf /tmp/v2.7.2.tar.gz /tmp/vsearch-2.7.2
 
 # set up link so vsearch can masquerade as usearch61
 RUN ln -s /usr/local/bin/vsearch $CONDA_DIR/bin/usearch61
