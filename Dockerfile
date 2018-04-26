@@ -590,7 +590,7 @@ RUN cd /tmp && \
     /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-4.1.11-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
-    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime matplotlib=1.4.3 mock nose vsearch=2.6.0 sra-tools mothur -c bioconda && \
+    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime matplotlib=1.4.3 mock nose sra-tools mothur -c bioconda && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
@@ -602,8 +602,18 @@ RUN cd /tmp && \
     rm qiime2-2018.2-py35-linux-conda.yml && \
     conda clean -tipsy
 
+RUN cd /tmp && \
+    wget https://github.com/torognes/vsearch/archive/v2.7.2.tar.gz && \
+    tar xzf v2.7.2.tar.gz && \
+    cd vsearch-2.7.2 && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf /tmp/v2.7.2.tar.gz /tmp/vsearch-2.7.2
+
 # set up link so vsearch can masquerade as usearch61
-RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
+RUN ln -s /usr/local/bin/vsearch $CONDA_DIR/bin/usearch61
 
 # # Install qiime1 notebook as $RSTUDIO_USER
 # RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
