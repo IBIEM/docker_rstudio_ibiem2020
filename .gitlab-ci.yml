@@ -12,7 +12,7 @@ stages:
 
 build:
   tags: 
-    - IBIEM2018
+    - ibiem2018
     - ipyn-az-09
   stage: build
   script: 
@@ -22,7 +22,7 @@ build:
 
 deploy_staging:
   tags: 
-    - IBIEM2018
+    - ibiem2018
     - ipyn-az-09
   stage: deploy
   script:
@@ -38,7 +38,7 @@ deploy_staging:
 
 deploy_production:
   tags: 
-    - IBIEM2018
+    - ibiem2018
     - ipyn-az-09
   stage: deploy
   script:
