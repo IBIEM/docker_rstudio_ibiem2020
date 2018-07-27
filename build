@@ -1,1 +1,1 @@
-sudo docker build -t="rstudio-ibiem" .
+sudo docker build -t="rstudio-ibiem2018" .

@@ -12,8 +12,8 @@ stages:
 
 build:
   tags: 
-    - IBIEM
-    - ipyn-az-09r
+    - IBIEM2018
+    - ipyn-az-09
   stage: build
   script: 
     - echo "Building the app in staging"
@@ -22,8 +22,8 @@ build:
 
 deploy_staging:
   tags: 
-    - IBIEM
-    - ipyn-az-09r
+    - IBIEM2018
+    - ipyn-az-09
   stage: deploy
   script:
     - echo "Building the app in staging"
@@ -38,8 +38,8 @@ deploy_staging:
 
 deploy_production:
   tags: 
-    - IBIEM
-    - ipyn-az-09r
+    - IBIEM2018
+    - ipyn-az-09
   stage: deploy
   script:
     - echo "Building the production app"

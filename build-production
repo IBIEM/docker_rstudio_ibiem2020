@@ -1,3 +1,3 @@
 sudo docker rmi rstudio-ibiem-old
-sudo docker tag rstudio-ibiem rstudio-ibiem-old
-sudo docker build -t="rstudio-ibiem" .
+sudo docker tag rstudio-ibiem2018 rstudio-ibiem-old
+sudo docker build -t="rstudio-ibiem2018" .
