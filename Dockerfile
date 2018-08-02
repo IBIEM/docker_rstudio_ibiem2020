@@ -608,6 +608,16 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 # # Install qiime1 notebook as $RSTUDIO_USER
 # RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
 #     conda clean -tipsy
+
+#------------------------------------------------------------
+# Set up 
+RUN echo "# Rstudio Login Confirmation
+Congratulations, you have successfully logged into the IBIEM computing environment  The login confirmation number is:
+
+**84041**
+
+Please enter this number on the confirmation page and submit so we can validate your login." >> login_confirm.md
+#------------------------------------------------------------
 # ##------------------------------------------------------------
 
    
