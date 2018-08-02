@@ -610,13 +610,8 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 #     conda clean -tipsy
 
 #------------------------------------------------------------
-# Set up 
-RUN echo "# Rstudio Login Confirmation
-Congratulations, you have successfully logged into the IBIEM computing environment  The login confirmation number is:
-
-**84041**
-
-Please enter this number on the confirmation page and submit so we can validate your login." >> login_confirm.md
+# Set up login_confirm.md
+RUN printf "# Rstudio Login Confirmation\nCongratulations, you have successfully logged into the IBIEM computing environment  The login confirmation number is:\n\n**84041**\n\nPlease enter this number on the confirmation page and submit so we can validate your login." > login_confirm.md
 #------------------------------------------------------------
 # ##------------------------------------------------------------
 
