@@ -611,7 +611,7 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 
 #------------------------------------------------------------
 # Set up login_confirm.md
-RUN printf "# Rstudio Login Confirmation\nCongratulations, you have successfully logged into the IBIEM computing environment  The login confirmation number is:\n\n**84041**\n\nPlease enter this number on the confirmation page and submit so we can validate your login." > $HOME/login_confirm.md
+RUN printf "# Rstudio Login Confirmation\nCongratulations, you have successfully logged into the IBIEM computing environment  The login confirmation number is:\n\n**84041**\n\nPlease enter this number on the confirmation page and submit so we can validate your login." > /home/guest/login_confirm.md
 #------------------------------------------------------------
 # ##------------------------------------------------------------
 
