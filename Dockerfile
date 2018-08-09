@@ -574,7 +574,7 @@ RUN mkdir -p $CONDA_DIR && \
     chown $RSTUDIO_USER $CONDA_DIR
     
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('argparse','phangorn','ips'), \
+RUN Rscript -e "install.packages(pkgs = c('argparse','phangorn','ips','unvotes'), \
     repos='https://cran.revolutionanalytics.com/', \
     dependencies=TRUE)" && \
     Rscript -e "source('https://bioconductor.org/biocLite.R'); \
@@ -608,12 +608,6 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 # # Install qiime1 notebook as 
 # RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
 #     conda clean -tipsy
-
-#------------------------------------------------------------
-# Set up login_confirm.md
-RUN printf "# Rstudio Login Confirmation\nCongratulations, you have successfully logged into the IBIEM computing environment  The login confirmation number is:\n\n**84041**\n\nPlease enter this number on the confirmation page and submit so we can validate your login." > /home/guest/login_confirm.md
-#------------------------------------------------------------
-# ##------------------------------------------------------------
 
    
 # ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
