@@ -582,9 +582,9 @@ RUN Rscript -e "install.packages(pkgs = c('argparse','phangorn','ips','unvotes',
 RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
-RUN Rscript -e "install.packages(pkgs = c('modelr','tidyverse'), \
-    repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
+# RUN Rscript -e "install.packages(pkgs = c('modelr','tidyverse'), \
+#     repos='https://cran.revolutionanalytics.com/', \
+#     dependencies=TRUE)"
 
 USER $RSTUDIO_USER
 
