@@ -575,11 +575,16 @@ RUN mkdir -p $CONDA_DIR && \
     chown $RSTUDIO_USER $CONDA_DIR
     
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('argparse','phangorn','ips','unvotes','tidyverse','DT'), \
+RUN Rscript -e "install.packages(pkgs = c('argparse','phangorn','ips','unvotes','DT'), \
     repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)" && \
-    Rscript -e "source('https://bioconductor.org/biocLite.R'); \
+    dependencies=TRUE)"
+
+RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
+
+RUN Rscript -e "install.packages(pkgs = c('modelr','tidyverse'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
 
 USER $RSTUDIO_USER
 
