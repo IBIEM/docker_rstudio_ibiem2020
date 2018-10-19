@@ -591,10 +591,12 @@ RUN cd /tmp && \
     /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-4.1.11-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
-    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime mock nose vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
-    $CONDA_DIR/bin/conda install --quiet star -c bioconda && \
+    $CONDA_DIR/bin/conda install --quiet python=2.7 vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
+    conda clean -tipsy
+
+RUN $CONDA_DIR/bin/conda create -n qiime1 python=2.7 qiime=1.8.0 matplotlib=1.4.3 mock nose -c bioconda  && \
     conda clean -tipsy
 
 # Install qiime2
