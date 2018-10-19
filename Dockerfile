@@ -617,8 +617,6 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 # Switch back to root to start up server
 USER root
 
-RUN mkdir /this_is_a_new_staging_image
-
 # expose the RStudio IDE port
 EXPOSE 8787 
 
