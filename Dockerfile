@@ -596,7 +596,7 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
 
-RUN $CONDA_DIR/bin/conda create -n qiime1 python=2.7 qiime=1.8.0 matplotlib=1.4.3 mock nose -c bioconda  && \
+RUN $CONDA_DIR/bin/conda create -n qiime1 python=2.7 qiime=1.8.0 -c bioconda  && \
     conda clean -tipsy
 
 # Install qiime2
