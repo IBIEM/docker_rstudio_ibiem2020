@@ -591,12 +591,12 @@ USER $RSTUDIO_USER
 # Install conda as $RSTUDIO_USER
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.1.11-Linux-x86_64.sh && \
-    echo "efd6a9362fc6b4085f599a881d20e57de628da8c1a898c08ec82874f3bad41bf *Miniconda3-4.1.11-Linux-x86_64.sh" | sha256sum -c - && \
-    /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-4.1.11-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
-    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime matplotlib=1.4.3 mock nose vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
+    wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.5.12-Linux-x86_64.sh && \
+    echo "4be03f925e992a8eda03758b72a77298 *Miniconda2-4.5.12-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda2-4.5.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda2-4.5.12-Linux-x86_64.sh && \
+    $CONDA_DIR/bin/conda install --quiet --yes conda==4.5.12 && \
+    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime=1.9.1 qiime-default-reference=0.1.3 matplotlib=1.4.3 mock nose vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
