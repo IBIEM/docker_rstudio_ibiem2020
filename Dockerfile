@@ -583,7 +583,7 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
-RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz', repos=NULL, type='source')
+RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz', repos=NULL, type='source')"
 
 USER $RSTUDIO_USER
 
