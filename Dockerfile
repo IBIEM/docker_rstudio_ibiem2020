@@ -561,7 +561,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
    jove \
    raxml \
    htop \
-   libudunits2-dev
+   libudunits2-dev \
+   software-properties-common
 
 
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
@@ -592,8 +593,8 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    add-apt-repository ppa:ubuntugis/ppa ; \
    apt-get update ; \
    apt-get  install -y \
-   libgdal-dev # \
-   # libgdal1-dev
+   libgdal-dev \
+   libgdal1-dev
    
 RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
