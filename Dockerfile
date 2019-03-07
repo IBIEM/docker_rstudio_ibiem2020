@@ -586,13 +586,16 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
     Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
-RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae'), \
-    repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
-
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
 RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz', repos=NULL, type='source')"
+
+# need to install older version of sf (for agricolae -> spdep) to avoid dependency on newer gdal, which isn't available in Ubuntu 16.04
+RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/sf/sf_0.2-1.tar.gz', repos=NULL, type='source')"
+
+RUN Rscript -e "install.packages(c('spdep', 'agricolae'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
 
 USER $RSTUDIO_USER
 
