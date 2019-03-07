@@ -551,7 +551,8 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 # add these to the supervisord.conf file
 #
 ## BEGIN: Additional libraries for IBIEM 2017-2018 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
+   apt-get  install -y \
    seqtk \
    ea-utils \
    chimeraslayer \
