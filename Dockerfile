@@ -561,9 +561,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
    jove \
    raxml \
    htop \
-   libudunits2-dev \
-   libgdal-dev \
-   libgdal1-dev
+   libudunits2-dev
 
 
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
@@ -590,10 +588,14 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
 # also needed to install multcomp dependencies: "sandwich","TH.data"
 RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz', repos=NULL, type='source')"
 
-# need to install older version of sf (for agricolae -> spdep) to avoid dependency on newer gdal, which isn't available in Ubuntu 16.04
-RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/sf/sf_0.2-0.tar.gz', repos=NULL, type='source')"
-
-RUN Rscript -e "install.packages(c('spdep', 'agricolae'), \
+RUN export DEBIAN_FRONTEND=noninteractive ; \
+   add-apt-repository ppa:ubuntugis/ppa ; \
+   apt-get update ; \
+   apt-get  install -y \
+   libgdal-dev \
+   libgdal1-dev
+   
+RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
     dependencies=TRUE)"
 
