@@ -559,7 +559,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
    jove \
    raxml \
    htop \
-   libudunits2-dev
+   libudunits2-dev \
+   libgdal-dev \
+   libgdal1-dev
 
 
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
@@ -576,11 +578,15 @@ RUN mkdir -p $CONDA_DIR && \
     chown $RSTUDIO_USER $CONDA_DIR
     
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','spdep','agricolae','sandwich','TH.data'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','sandwich','TH.data'), \
     repos='https://cran.revolutionanalytics.com/', \
     dependencies=TRUE)" && \
     Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
+
+RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae')) \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
 
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
