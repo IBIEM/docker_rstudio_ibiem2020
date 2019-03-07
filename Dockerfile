@@ -592,8 +592,8 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    add-apt-repository ppa:ubuntugis/ppa ; \
    apt-get update ; \
    apt-get  install -y \
-   libgdal-dev \
-   libgdal1-dev
+   libgdal-dev # \
+   # libgdal1-dev
    
 RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
