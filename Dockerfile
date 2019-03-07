@@ -591,7 +591,7 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
 RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz', repos=NULL, type='source')"
 
 # need to install older version of sf (for agricolae -> spdep) to avoid dependency on newer gdal, which isn't available in Ubuntu 16.04
-RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/sf/sf_0.2-1.tar.gz', repos=NULL, type='source')"
+RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/sf/sf_0.2-0.tar.gz', repos=NULL, type='source')"
 
 RUN Rscript -e "install.packages(c('spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
