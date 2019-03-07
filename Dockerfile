@@ -552,6 +552,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 #
 ## BEGIN: Additional libraries for IBIEM 2017-2018 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
+   DEBIAN_FRONTEND=noninteractive \
    apt-get  install -y \
    seqtk \
    ea-utils \
