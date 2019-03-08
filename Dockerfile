@@ -71,7 +71,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
    libxml2-dev \
    libssl-dev
 
-
+# install rmarkdown
+ADD ./conf /r-studio
+# RUN R CMD BATCH /r-studio/install-rmarkdown.R
+# RUN rm /install-rmarkdown.Rout 
 
 # Supervisord
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y supervisor && \
