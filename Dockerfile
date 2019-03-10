@@ -142,11 +142,6 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
     Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
-RUN Rscript -e "install.packages(c('multcomp'), \
-    repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
-
-
 RUN export DEBIAN_FRONTEND=noninteractive ; \
    add-apt-repository ppa:ubuntugis/ppa ; \
    apt-get update ; \
@@ -157,6 +152,7 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
 RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
     dependencies=TRUE)"
+
 
 USER $RSTUDIO_USER
 
@@ -187,11 +183,22 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 # RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
 #     conda clean -tipsy
 
-   
+USER root
+
+
+RUN Rscript -e "install.packages(c('mvtnorm'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
+
+# need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
+# also needed to install multcomp dependencies: "sandwich","TH.data"
+RUN Rscript -e "install.packages('https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz', repos=NULL, type='source')"
+
 # ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Switch back to root to start up server
 USER root
+
 
 # expose the RStudio IDE port
 EXPOSE 8787 
