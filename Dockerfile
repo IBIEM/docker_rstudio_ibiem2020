@@ -9,6 +9,7 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >>  /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
 
+
 RUN apt-get update ; \
     apt-get dist-upgrade -y 
 
