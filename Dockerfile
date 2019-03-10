@@ -196,6 +196,10 @@ RUN Rscript -e \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
     repos=NULL, type='source')"
 
+RUN Rscript -e "install.packages(c('here'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
+
 # ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Switch back to root to start up server
