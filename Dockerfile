@@ -167,7 +167,9 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    python-dev \
    python-pip \
    python-numpy \
-   python-matplotlib ; \
+   python-matplotlib \
+   python-pandas \
+   ipython ; \
    pip install qiime
 
 USER $RSTUDIO_USER
