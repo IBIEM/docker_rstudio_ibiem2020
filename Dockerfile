@@ -160,16 +160,17 @@ RUN Rscript -e \
     repos=NULL, type='source')"
 
 
-# RUN export DEBIAN_FRONTEND=noninteractive ; \
-#    apt-get update ; \
-#    apt-get  install -y \
-#    build-essential \
-#    python-dev \
-#    python-pip \
-#    python-numpy ; \
-#    pip install qiime
+RUN export DEBIAN_FRONTEND=noninteractive ; \
+   apt-get update ; \
+   apt-get  install -y \
+   build-essential \
+   python-dev \
+   python-pip \
+   python-numpy \
+   python-matplotlib ; \
+   pip install qiime
 
-# USER $RSTUDIO_USER
+USER $RSTUDIO_USER
 
 # # Install conda as $RSTUDIO_USER
 # RUN cd /tmp && \
@@ -194,9 +195,9 @@ RUN Rscript -e \
 # # set up link so vsearch can masquerade as usearch61
 # RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 
-# # # Install qiime1 notebook as 
-# # RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
-# #     conda clean -tipsy
+# # Install qiime1 notebook as 
+# RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
+#     conda clean -tipsy
 
 # ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
