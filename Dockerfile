@@ -5,7 +5,7 @@
 FROM   ubuntu:16.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
-RUN echo "Force Rebuild From Scratch 1"
+RUN echo "Force Rebuild From Scratch 2"
 
 # get R from a CRAN archive 
 RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >>  /etc/apt/sources.list
