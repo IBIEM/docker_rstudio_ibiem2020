@@ -173,6 +173,20 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    ipython ; \
    pip install qiime
 
+
+# Packages for metatranscriptomic group
+# Trimmomatic, BWA, Samtools, ABySS 2.0, Trans-ABySS, Blat, Star
+# ABySS 2.0, Trans-ABySS, Blat,
+
+RUN export DEBIAN_FRONTEND=noninteractive ; \
+   apt-get update ; \
+   apt-get  install -y \
+   samtools \
+   rna-star \
+   bwa \
+   trimmomatic
+   # abyss
+
 USER $RSTUDIO_USER
 
 # # Install conda as $RSTUDIO_USER
