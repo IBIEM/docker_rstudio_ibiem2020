@@ -159,6 +159,16 @@ RUN Rscript -e \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
     repos=NULL, type='source')"
 
+
+RUN export DEBIAN_FRONTEND=noninteractive ; \
+   apt-get update ; \
+   apt-get  install -y \
+   build-essential \
+   python-dev \
+   python-pip \
+   python-numpy ; \
+   pip install qiime
+
 USER $RSTUDIO_USER
 
 # Install conda as $RSTUDIO_USER
@@ -169,7 +179,7 @@ RUN cd /tmp && \
     /bin/bash Miniconda2-4.5.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda2-4.5.12-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.5.12 && \
-    $CONDA_DIR/bin/conda install --quiet python=2.7 qiime=1.9.1 qiime-default-reference=0.1.3 matplotlib=1.4.3 mock nose vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
+    $CONDA_DIR/bin/conda install --quiet python=2.7 vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
