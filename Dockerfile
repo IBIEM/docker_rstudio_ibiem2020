@@ -137,13 +137,6 @@ ENV RSTUDIO_USER guest
 
 RUN mkdir -p $CONDA_DIR && \
     chown $RSTUDIO_USER $CONDA_DIR
-    
-#  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','sandwich','TH.data'), \
-    repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)" && \
-    Rscript -e "source('https://bioconductor.org/biocLite.R'); \
-    biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
 RUN export DEBIAN_FRONTEND=noninteractive ; \
    add-apt-repository ppa:ubuntugis/ppa ; \
@@ -152,10 +145,19 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    libgdal-dev \
    libgdal1-dev
    
-RUN Rscript -e "install.packages(c('sf', 'spdep', 'agricolae'), \
+#  Add microbiome specific R and bioconductor packages
+RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
+    dependencies=TRUE)" && \
+    Rscript -e "source('https://bioconductor.org/biocLite.R'); \
+    biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
 
+# need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
+# also needed to install multcomp dependencies: "sandwich","TH.data"
+RUN Rscript -e \
+    "install.packages(c('https://cran.r-project.org/src/contrib/Archive/mvtnorm/mvtnorm_1.0-8.tar.gz', \
+    'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
+    repos=NULL, type='source')"
 
 USER $RSTUDIO_USER
 
@@ -185,20 +187,6 @@ RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
 # # Install qiime1 notebook as 
 # RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
 #     conda clean -tipsy
-
-USER root
-
-
-# need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
-# also needed to install multcomp dependencies: "sandwich","TH.data"
-RUN Rscript -e \
-    "install.packages(c('https://cran.r-project.org/src/contrib/Archive/mvtnorm/mvtnorm_1.0-8.tar.gz', \
-    'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
-    repos=NULL, type='source')"
-
-RUN Rscript -e "install.packages(c('here'), \
-    repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
 
 # ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
