@@ -127,8 +127,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
 
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
 # Configure environment
-ENV CONDA_DIR /opt/conda
+# ENV CONDA_DIR /opt/conda
 ENV PATH $PATH:$CONDA_DIR/bin:/usr/lib/ChimeraSlayer
+ENV MANUAL_BIN /opt/bin
+ENV PATH $PATH:$MANUAL_BIN
 ENV SHELL /bin/bash
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -176,7 +178,6 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
 
 # Packages for metatranscriptomic group
 # Trimmomatic, BWA, Samtools, ABySS 2.0, Trans-ABySS, Blat, Star
-# ABySS 2.0, Trans-ABySS, Blat,
 
 RUN export DEBIAN_FRONTEND=noninteractive ; \
    apt-get update ; \
@@ -184,8 +185,15 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    samtools \
    rna-star \
    bwa \
-   trimmomatic
+   trimmomatic \
+   python-igraph
    # abyss
+
+# ABySS 2.0, Trans-ABySS
+RUN mkdir -p $MANUAL_BIN ; \
+   wget -O $MANUAL_BIN/blat http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat;
+   chmod 111 $MANUAL_BIN/blat
+
 
 USER $RSTUDIO_USER
 
