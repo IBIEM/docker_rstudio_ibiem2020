@@ -37,7 +37,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
    telnet \
    nmap \
    socat \
-   python-software-properties \
+   software-properties-common \
    wget \
    sudo \
    libcurl4-openssl-dev \
@@ -128,8 +128,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
 
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
 # Configure environment
-# ENV CONDA_DIR /opt/conda
-ENV PATH $PATH:$CONDA_DIR/bin:/usr/lib/ChimeraSlayer
 ENV MANUAL_BIN /opt/bin
 ENV PATH $PATH:$MANUAL_BIN
 ENV SHELL /bin/bash
@@ -138,15 +136,22 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV RSTUDIO_USER guest
 
-RUN mkdir -p $CONDA_DIR && \
-    chown $RSTUDIO_USER $CONDA_DIR
+# ENV CONDA_DIR /opt/conda
+# ENV PATH $PATH:$CONDA_DIR/bin:/usr/lib/ChimeraSlayer
+# RUN mkdir -p $CONDA_DIR && \
+#     chown $RSTUDIO_USER $CONDA_DIR
 
-RUN export DEBIAN_FRONTEND=noninteractive ; \
-   add-apt-repository ppa:ubuntugis/ppa ; \
-   apt-get update ; \
+# RUN export DEBIAN_FRONTEND=noninteractive ; \
+#    add-apt-repository ppa:ubuntugis/ppa ; \
+#    apt-get update ; \
+#    apt-get  install -y \
+#    libgdal-dev \
+#    libgdal1-dev
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
+   DEBIAN_FRONTEND=noninteractive \
    apt-get  install -y \
-   libgdal-dev \
-   libgdal1-dev
+   libgdal-dev
    
 #  Add microbiome specific R and bioconductor packages
 RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
