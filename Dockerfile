@@ -2,13 +2,14 @@
 #
 # VERSION 1.1
 
-FROM   ubuntu:16.04
+FROM   ubuntu:18.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 RUN echo "Force Rebuild From Scratch 2"
 
 # get R from a CRAN archive 
-RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >>  /etc/apt/sources.list
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y gnupg2
+# RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >>  /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
 
 
@@ -186,12 +187,12 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    rna-star \
    bwa \
    trimmomatic \
-   python-igraph
-   # abyss
+   python-igraph \
+   abyss
 
 # ABySS 2.0, Trans-ABySS
 RUN mkdir -p $MANUAL_BIN ; \
-   wget -O $MANUAL_BIN/blat http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat;
+   wget -O $MANUAL_BIN/blat http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat; \
    chmod 111 $MANUAL_BIN/blat
 
 
