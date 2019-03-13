@@ -129,7 +129,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
 # Configure environment
 ENV MANUAL_BIN /opt/bin
-ENV PATH $PATH:$MANUAL_BIN
+ENV MANUAL_SHARE="/opt/share"
+ENV PATH $PATH:$MANUAL_BIN:/usr/lib/abyss/
 ENV SHELL /bin/bash
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -195,11 +196,19 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    python-igraph \
    abyss
 
-# ABySS 2.0, Trans-ABySS
-RUN mkdir -p $MANUAL_BIN ; \
+# Trans-ABySS
+RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
    wget -O $MANUAL_BIN/blat http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat; \
-   chmod 111 $MANUAL_BIN/blat
-
+   chmod 555 $MANUAL_BIN/blat ;\
+   export TRANSABYSS_VERSION="2.0.1" ; \
+   export TA_DIR="transabyss-${TRANSABYSS_VERSION}" ; \
+   wget https://github.com/bcgsc/transabyss/archive/${TRANSABYSS_VERSION}.tar.gz ; \
+   tar -zxf ${TRANSABYSS_VERSION}.tar.gz ; \
+   mv $TA_DIR/transabyss $TA_DIR/transabyss-merge $TA_DIR/bin $TA_DIR/utilities $MANUAL_BIN ; \
+   mv $TA_DIR/sample_dataset $MANUAL_SHARE/transabyss_sample_dataset ; \
+   chmod -R 555 $MANUAL_BIN/transabyss $MANUAL_BIN/transabyss-merge ; \
+   chmod -R 555 $MANUAL_BIN/bin $MANUAL_BIN/utilities $MANUAL_SHARE/transabyss_sample_dataset  ; \
+   rm -rf ${TRANSABYSS_VERSION}.tar.gz transabyss-${TRANSABYSS_VERSION}
 
 USER $RSTUDIO_USER
 
