@@ -211,6 +211,9 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
    chmod -R 555 $MANUAL_BIN/bin $MANUAL_BIN/utilities $MANUAL_SHARE/transabyss_sample_dataset  ; \
    rm -rf ${TRANSABYSS_VERSION}.tar.gz transabyss-${TRANSABYSS_VERSION}
 
+# DukeDSClient
+RUN pip install DukeDSClient
+
 USER $RSTUDIO_USER
 
 # # Install conda as $RSTUDIO_USER
