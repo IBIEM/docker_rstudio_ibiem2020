@@ -214,6 +214,10 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
 # DukeDSClient
 RUN pip install DukeDSClient
 
+RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
+    biocLite(pkgs=c('DECIPHER'))"
+
+
 USER $RSTUDIO_USER
 
 # # Install conda as $RSTUDIO_USER
