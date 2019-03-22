@@ -123,9 +123,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV RSTUDIO_USER guest
 
-RUN export DEBIAN_FRONTEND=noninteractive apt-get update ; \
-   export DEBIAN_FRONTEND=noninteractive \
-   apt-get install -y \
+RUN apt-get update ; \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    seqtk \
    ea-utils \
    chimeraslayer \
