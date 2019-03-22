@@ -161,7 +161,7 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
     dependencies=TRUE)"
 
 RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
-    biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq'))"
+    biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER'))"
 
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
@@ -195,7 +195,8 @@ RUN export DEBIAN_FRONTEND=noninteractive ; \
    bwa \
    trimmomatic \
    python-igraph \
-   abyss
+   abyss \
+   bc
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
@@ -213,10 +214,6 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
 
 # DukeDSClient
 RUN pip install DukeDSClient
-
-RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
-    biocLite(pkgs=c('DECIPHER'))"
-
 
 USER $RSTUDIO_USER
 
