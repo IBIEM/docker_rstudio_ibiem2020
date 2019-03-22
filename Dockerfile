@@ -112,21 +112,6 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 # add these to the supervisord.conf file
 #
 ## BEGIN: Additional libraries for IBIEM 2017-2018 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
-   DEBIAN_FRONTEND=noninteractive \
-   apt-get  install -y \
-   seqtk \
-   ea-utils \
-   chimeraslayer \
-   tmux \
-   jove \
-   raxml \
-   htop \
-   libudunits2-dev \
-   software-properties-common \
-   sra-toolkit
-
-
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
 # Configure environment
 ENV MANUAL_BIN /opt/bin
@@ -138,23 +123,37 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV RSTUDIO_USER guest
 
-# ENV CONDA_DIR /opt/conda
-# ENV PATH $PATH:$CONDA_DIR/bin:/usr/lib/ChimeraSlayer
-# RUN mkdir -p $CONDA_DIR && \
-#     chown $RSTUDIO_USER $CONDA_DIR
+RUN export DEBIAN_FRONTEND=noninteractive apt-get update ; \
+   export DEBIAN_FRONTEND=noninteractive \
+   apt-get install -y \
+   seqtk \
+   ea-utils \
+   chimeraslayer \
+   tmux \
+   jove \
+   raxml \
+   htop \
+   libudunits2-dev \
+   software-properties-common \
+   sra-toolkit \
+   libgdal-dev \
+   build-essential \
+   python-dev \
+   python-pip \
+   python-numpy \
+   python-matplotlib \
+   python-pandas \
+   ipython \
+   samtools \
+   rna-star \
+   bwa \
+   trimmomatic \
+   python-igraph \
+   abyss \
+   bc   
 
-# RUN export DEBIAN_FRONTEND=noninteractive ; \
-#    add-apt-repository ppa:ubuntugis/ppa ; \
-#    apt-get update ; \
-#    apt-get  install -y \
-#    libgdal-dev \
-#    libgdal1-dev
+RUN pip install qiime
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update ; \
-   DEBIAN_FRONTEND=noninteractive \
-   apt-get  install -y \
-   libgdal-dev
-   
 #  Add microbiome specific R and bioconductor packages
 RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
@@ -170,33 +169,7 @@ RUN Rscript -e \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
     repos=NULL, type='source')"
 
-# Packages for QIIME 1
-RUN export DEBIAN_FRONTEND=noninteractive ; \
-   apt-get update ; \
-   apt-get  install -y \
-   build-essential \
-   python-dev \
-   python-pip \
-   python-numpy \
-   python-matplotlib \
-   python-pandas \
-   ipython ; \
-   pip install qiime
 
-
-# Packages for metatranscriptomic group
-# Trimmomatic, BWA, Samtools, ABySS 2.0, Trans-ABySS, Blat, Star
-
-RUN export DEBIAN_FRONTEND=noninteractive ; \
-   apt-get update ; \
-   apt-get  install -y \
-   samtools \
-   rna-star \
-   bwa \
-   trimmomatic \
-   python-igraph \
-   abyss \
-   bc
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
