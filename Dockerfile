@@ -154,7 +154,7 @@ RUN apt-get update ; \
 RUN pip install qiime
 
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','robCompositions','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
     dependencies=TRUE)"
 
@@ -186,6 +186,11 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
 
 # DukeDSClient
 RUN pip install DukeDSClient
+
+#  Add microbiome specific R and bioconductor packages
+RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
 
 USER $RSTUDIO_USER
 
