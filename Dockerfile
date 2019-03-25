@@ -190,6 +190,16 @@ RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
     repos='https://cran.revolutionanalytics.com/', \
     dependencies=TRUE)"
 
+# Install FastTree and FastTreeMP
+RUN MANUAL_BIN=/tmp/manual/bin ; \
+   mkdir -p $MANUAL_BIN ; \
+   wget --no-verbose -O $MANUAL_BIN/FastTree.c $MANUAL_BIN http://www.microbesonline.org/fasttree/FastTree-2.1.10.c ; \
+   gcc -DUSE_DOUBLE -O3 -finline-functions -funroll-loops -Wall -o $MANUAL_BIN/FastTree $MANUAL_BIN/FastTree.c -lm ; \
+   gcc -DUSE_DOUBLE -DOPENMP -fopenmp -O3 -finline-functions -funroll-loops -Wall -o $MANUAL_BIN/FastTreeMP $MANUAL_BIN/FastTree.c -lm ; \
+   chmod 555 $MANUAL_BIN/FastTree $MANUAL_BIN/FastTreeMP ; \
+   rm $MANUAL_BIN/FastTree*.c
+
+
 USER $RSTUDIO_USER
 
 # # Install conda as $RSTUDIO_USER
