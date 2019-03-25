@@ -168,15 +168,13 @@ RUN Rscript -e \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
     repos=NULL, type='source')"
 
-
-
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
-   wget -O $MANUAL_BIN/blat http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat; \
+   wget --no-verbose -O $MANUAL_BIN/blat http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/blat/blat; \
    chmod 555 $MANUAL_BIN/blat ;\
    export TRANSABYSS_VERSION="2.0.1" ; \
    export TA_DIR="transabyss-${TRANSABYSS_VERSION}" ; \
-   wget https://github.com/bcgsc/transabyss/archive/${TRANSABYSS_VERSION}.tar.gz ; \
+   wget --no-verbose https://github.com/bcgsc/transabyss/archive/${TRANSABYSS_VERSION}.tar.gz ; \
    tar -zxf ${TRANSABYSS_VERSION}.tar.gz ; \
    mv $TA_DIR/transabyss $TA_DIR/transabyss-merge $TA_DIR/bin $TA_DIR/utilities $MANUAL_BIN ; \
    mv $TA_DIR/sample_dataset $MANUAL_SHARE/transabyss_sample_dataset ; \
