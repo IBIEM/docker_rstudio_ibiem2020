@@ -202,34 +202,8 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
 
 USER $RSTUDIO_USER
 
-# # Install conda as $RSTUDIO_USER
-# RUN cd /tmp && \
-#     mkdir -p $CONDA_DIR && \
-#     wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.5.12-Linux-x86_64.sh && \
-#     echo "4be03f925e992a8eda03758b72a77298 *Miniconda2-4.5.12-Linux-x86_64.sh" | md5sum -c - && \
-#     /bin/bash Miniconda2-4.5.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-#     rm Miniconda2-4.5.12-Linux-x86_64.sh && \
-#     $CONDA_DIR/bin/conda install --quiet --yes conda==4.5.12 && \
-#     $CONDA_DIR/bin/conda install --quiet python=2.7 vsearch=2.6.0 sra-tools mothur lefse -c bioconda -c r && \
-#     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
-#     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
-#     conda clean -tipsy
 
-# # Install qiime2
-# RUN cd /tmp && \
-#     wget --quiet https://data.qiime2.org/distro/core/qiime2-2018.2-py35-linux-conda.yml && \
-#     $CONDA_DIR/bin/conda env create --quiet -n qiime2-2018.2 --file qiime2-2018.2-py35-linux-conda.yml && \
-#     rm qiime2-2018.2-py35-linux-conda.yml && \
-#     conda clean -tipsy
-
-# # set up link so vsearch can masquerade as usearch61
-# RUN ln -s $CONDA_DIR/bin/vsearch $CONDA_DIR/bin/usearch61
-
-# # Install qiime1 notebook as 
-# RUN conda install python=2.7 qiime matplotlib=1.4.3 mock nose -c bioconda && \
-#     conda clean -tipsy
-
-# ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Switch back to root to start up server
 USER root
