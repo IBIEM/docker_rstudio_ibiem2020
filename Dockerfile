@@ -192,7 +192,7 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
    rm $MANUAL_BIN/FastTree*.c
 
 
-USER $RSTUDIO_USER
+# USER $RSTUDIO_USER
 
 
 ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
