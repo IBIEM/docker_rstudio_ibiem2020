@@ -192,7 +192,7 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
    rm $MANUAL_BIN/FastTree*.c
 
 USER $RSTUDIO_USER
-COPY user-settings /home/guest/.rstudio/monitored/user-settings/user-settings
+COPY user-settings /home/guest/.rstudio/monitored/user-settings/user-settings_blah_blah_blah
 # COPY user-settings /home/rstudio/.rstudio/monitored/user-settings/
 # No chown will cause "RStudio Initalization Error"
 # "Error occurred during the transmission"; RStudio will not load.
