@@ -192,7 +192,17 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
    rm $MANUAL_BIN/FastTree*.c
 
 COPY rstudio_user_settings /home/guest/.rstudio/monitored/user-settings/user-settings
+COPY user-settings /home/rstudio/.rstudio/monitored/user-settings/
+# No chown will cause "RStudio Initalization Error"
+# "Error occurred during the transmission"; RStudio will not load.
+RUN chown -R guest:guest /home/rstudio/.rstudio
+
 USER $RSTUDIO_USER
+COPY user-settings /home/guest/.rstudio/monitored/user-settings/user-settings
+# COPY user-settings /home/rstudio/.rstudio/monitored/user-settings/
+# No chown will cause "RStudio Initalization Error"
+# "Error occurred during the transmission"; RStudio will not load.
+# RUN chown -R guest:guest /home/rstudio/.rstudio
 
 
 ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
