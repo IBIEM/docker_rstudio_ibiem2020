@@ -191,7 +191,7 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
    chmod 555 $MANUAL_BIN/FastTree $MANUAL_BIN/FastTreeMP ; \
    rm $MANUAL_BIN/FastTree*.c
 
-
+COPY rstudio_user_settings /home/guest/.rstudio/monitored/user-settings/user-settings
 USER $RSTUDIO_USER
 
 
