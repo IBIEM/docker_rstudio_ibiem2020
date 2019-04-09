@@ -191,6 +191,15 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
    chmod 555 $MANUAL_BIN/FastTree $MANUAL_BIN/FastTreeMP ; \
    rm $MANUAL_BIN/FastTree*.c
 
+Rscript -e "source('https://bioconductor.org/biocLite.R'); \
+    biocLite(pkgs=c('ALDEx2'))"
+    
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   rdp-readseq \
+   rdp-classifier \
+   rdp-alignment \
+   librdp-taxonomy-tree-java
 
 # USER $RSTUDIO_USER
 
