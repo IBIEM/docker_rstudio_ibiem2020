@@ -8,26 +8,29 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 RUN echo "Force Rebuild From Scratch 2"
 
 # get R from a CRAN archive 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y gnupg2
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   gnupg2
 # RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >>  /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
 
 
-RUN apt-get update ; \
+RUN apt-get update && \
     apt-get dist-upgrade -y 
 
 # we want OpenBLAS for faster linear algebra as described here: http://brettklamer.com/diversions/statistical/faster-blas-in-r/
-RUN apt-get install  -y \
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    apt-utils
 
-
-RUN apt-get update ; \
-   DEBIAN_FRONTEND=noninteractive apt-get  install -y  \
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    r-base \
    r-base-dev
 
 #Utilities
-RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    vim \
    less \
    net-tools \
@@ -43,16 +46,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
    libcurl4-openssl-dev \
    libxml2-dev 
 
-# we need TeX for the rmarkdown package in RStudio 
-RUN apt-get update 
-RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
+# we need TeX for the rmarkdown package in RStudio
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    texlive \ 
    texlive-base \ 
    texlive-latex-extra \ 
    texlive-pstricks 
 
 # R-Studio
-RUN DEBIAN_FRONTEND=noninteractive apt-get  install -y \
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    gdebi-core \
    libapparmor1
 
@@ -61,8 +65,8 @@ RUN DEBIAN_FRONTEND=noninteractive gdebi -n rstudio-server-1.1.383-amd64.deb
 RUN rm rstudio-server-1.1.383-amd64.deb
 
 # dependency for R XML library
-RUN apt-get update 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    libxml2 \ 
    libxml2-dev \
    libssl-dev
@@ -73,7 +77,9 @@ ADD ./conf /r-studio
 # RUN rm /install-rmarkdown.Rout 
 
 # Supervisord
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y supervisor && \
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   supervisor && \
    mkdir -p /var/log/supervisor
 CMD ["/usr/bin/supervisord", "-n"]
 
@@ -91,7 +97,9 @@ RUN adduser --disabled-password --gecos "" --ingroup users guest
 ADD initialize.sh /
 
 # set the locale so RStudio doesn't complain about UTF-8
-RUN apt-get install  -y locales 
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   locales 
 RUN locale-gen en_US en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
@@ -115,7 +123,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV RSTUDIO_USER guest
 
-RUN apt-get update ; \
+RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    seqtk \
    ea-utils \
@@ -141,8 +149,12 @@ RUN apt-get update ; \
    trimmomatic \
    python-igraph \
    abyss \
-   bc   
-
+   bc \
+   rdp-readseq \
+   rdp-classifier \
+   rdp-alignment \
+   librdp-taxonomy-tree-java   
+   
 RUN pip install qiime
 
 #  Add microbiome specific R and bioconductor packages
@@ -151,7 +163,7 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyv
     dependencies=TRUE)"
 
 RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
-    biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER'))"
+    biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER','ALDEx2'))"
 
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
@@ -159,6 +171,10 @@ RUN Rscript -e \
     "install.packages(c('https://cran.r-project.org/src/contrib/Archive/mvtnorm/mvtnorm_1.0-8.tar.gz', \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
     repos=NULL, type='source')"
+
+RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
@@ -177,11 +193,6 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
 # DukeDSClient
 RUN pip install DukeDSClient
 
-#  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
-    repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
-
 # Install FastTree and FastTreeMP
 RUN MANUAL_BIN=/tmp/manual/bin ; \
    mkdir -p $MANUAL_BIN ; \
@@ -191,15 +202,6 @@ RUN MANUAL_BIN=/tmp/manual/bin ; \
    chmod 555 $MANUAL_BIN/FastTree $MANUAL_BIN/FastTreeMP ; \
    rm $MANUAL_BIN/FastTree*.c
 
-RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
-    biocLite(pkgs=c('ALDEx2'))"
-    
-RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
-   rdp-readseq \
-   rdp-classifier \
-   rdp-alignment \
-   librdp-taxonomy-tree-java
 
 # USER $RSTUDIO_USER
 
