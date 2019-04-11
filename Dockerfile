@@ -201,6 +201,23 @@ RUN mkdir -p $MANUAL_BIN && \
    chmod 555 $MANUAL_BIN/FastTree $MANUAL_BIN/FastTreeMP && \
    rm $MANUAL_BIN/FastTree*.c
 
+# Install Lefse
+# R libraries: splines, stats4, survival, mvtnorm, modeltools, coin, MASS
+RUN Rscript -e "install.packages(pkgs = c('coin'), \
+    repos='https://cran.revolutionanalytics.com/', \
+    dependencies=TRUE)"
+
+# python libraries: rpy2 (v. 2.1 or higher), numpy, matplotlib (v. 1.0 or higher), argparse 
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   python-rpy2
+
+RUN mkdir -p $MANUAL_BIN && \
+   curl -s -o $MANUAL_BIN/lefse.tar.gz $MANUAL_BIN https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
+   tar --strip-components=1 -zxf $MANUAL_BIN/lefse.tar.gz && \
+   chmod 555 $MANUAL_BIN/*.py && \
+   rm $MANUAL_BIN/lefse.tar.gz
+
 
 # USER $RSTUDIO_USER
 
