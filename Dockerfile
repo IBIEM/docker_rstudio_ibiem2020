@@ -213,7 +213,7 @@ RUN apt-get update && \
    python-rpy2
 
 RUN mkdir -p $MANUAL_BIN && \
-   curl -s -o $MANUAL_BIN/lefse.tar.gz $MANUAL_BIN https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
+   curl -s -o $MANUAL_BIN/lefse.tar.gz https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
    tar --strip-components=1 -zxf $MANUAL_BIN/lefse.tar.gz && \
    chmod 555 $MANUAL_BIN/*.py && \
    rm $MANUAL_BIN/lefse.tar.gz
