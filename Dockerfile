@@ -215,7 +215,10 @@ RUN apt-get update && \
 RUN mkdir -p $MANUAL_BIN && \
    curl -s -o $MANUAL_BIN/lefse.tar.gz https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
    tar --strip-components=1 -zxf $MANUAL_BIN/lefse.tar.gz && \
-   chmod 555 $MANUAL_BIN/*.py && \
+   chmod 555 $MANUAL_BIN/format_input.py $MANUAL_BIN/lefse.py \
+      $MANUAL_BIN/lefse2circlader.py $MANUAL_BIN/plot_cladogram.py \
+      $MANUAL_BIN/plot_features.py $MANUAL_BIN/plot_res.py \
+      $MANUAL_BIN/qiime2lefse.py $MANUAL_BIN/run_lefse.py && \
    rm $MANUAL_BIN/lefse.tar.gz
 
 # USER $RSTUDIO_USER
