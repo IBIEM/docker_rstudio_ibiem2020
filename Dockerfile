@@ -218,7 +218,6 @@ RUN mkdir -p $MANUAL_BIN && \
    chmod 555 $MANUAL_BIN/*.py && \
    rm $MANUAL_BIN/lefse.tar.gz
 
-
 # USER $RSTUDIO_USER
 
 ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
