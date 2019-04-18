@@ -153,7 +153,8 @@ RUN apt-get update && \
    rdp-readseq \
    rdp-classifier \
    rdp-alignment \
-   librdp-taxonomy-tree-java   
+   librdp-taxonomy-tree-java \
+   clustalw
    
 RUN pip install qiime
 
