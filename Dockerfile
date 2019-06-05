@@ -225,6 +225,19 @@ RUN mkdir -p $MANUAL_BIN && \
 
 # USER $RSTUDIO_USER
 
+# UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python-h5py \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+# UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+
 ## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Switch back to root to start up server
