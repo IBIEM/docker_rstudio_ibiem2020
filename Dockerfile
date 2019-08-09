@@ -58,7 +58,8 @@ RUN apt-get update && \
 RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    gdebi-core \
-   libapparmor1
+   libapparmor1 \
+   dpkg-sig
 
 
 # https://github.com/inversepath/usbarmory-debian-base_image/issues/9
