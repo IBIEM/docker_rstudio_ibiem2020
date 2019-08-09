@@ -65,7 +65,8 @@ RUN apt-get update && \
 # https://github.com/inversepath/usbarmory-debian-base_image/issues/9
 RUN gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
 
-RUN DEBIAN_FRONTEND=noninteractive wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.1335-amd64.deb && \
+# https://www.rstudio.com/code-signing/
+RUN DEBIAN_FRONTEND=noninteractive wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.1335-amd64.deb && \
     dpkg-sig --verify rstudio-server-1.2.1335-amd64.deb && \
     gdebi -n rstudio-server-1.2.1335-amd64.deb && \
     rm rstudio-server-1.2.1335-amd64.deb
