@@ -54,15 +54,18 @@ RUN apt-get update && \
    texlive-latex-extra \ 
    texlive-pstricks 
 
-# R-Studio
+# R-Studio Version:  1.2.1335 Released:  2019-04-08
 RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    gdebi-core \
    libapparmor1
 
-RUN DEBIAN_FRONTEND=noninteractive wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
-RUN DEBIAN_FRONTEND=noninteractive gdebi -n rstudio-server-1.1.383-amd64.deb
-RUN rm rstudio-server-1.1.383-amd64.deb
+RUN gpg --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F &&
+
+RUN DEBIAN_FRONTEND=noninteractive wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.1335-amd64.deb && \
+    dpkg-sig --verify rstudio-server-1.2.1335-amd64.deb && \
+    gdebi -n rstudio-server-1.2.1335-amd64.deb && \
+    rm rstudio-server-1.2.1335-amd64.deb
 
 # dependency for R XML library
 RUN apt-get update && \
