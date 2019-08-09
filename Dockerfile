@@ -60,7 +60,7 @@ RUN apt-get update && \
    gdebi-core \
    libapparmor1
 
-RUN gpg --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F &&
+RUN gpg --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
 
 RUN DEBIAN_FRONTEND=noninteractive wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.1335-amd64.deb && \
     dpkg-sig --verify rstudio-server-1.2.1335-amd64.deb && \
