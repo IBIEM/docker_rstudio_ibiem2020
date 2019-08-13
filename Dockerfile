@@ -118,7 +118,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 # initialize script and the RStudio server. If you want to run other processes
 # add these to the supervisord.conf file
 #
-## BEGIN: Additional libraries for IBIEM 2017-2018 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+## BEGIN: Additional libraries for IBIEM 2018-2019 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # This block ripped off from https://bitbucket.org/granek/parker_rat_lung/src/06190fd6fcac5054958f35dd37c303f538dec694/docker/Dockerfile?at=master&fileviewer=file-view-default
 # Configure environment
 ENV MANUAL_BIN /opt/bin
@@ -220,6 +220,17 @@ RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    python-rpy2
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python-h5py
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    nano
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p $MANUAL_BIN && \
    cd $MANUAL_BIN && \
    curl -s -o lefse.tar.gz https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
@@ -234,18 +245,9 @@ RUN mkdir -p $MANUAL_BIN && \
 
 # UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    python-h5py \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-
-
-
-
-## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Switch back to root to start up server
 USER root
