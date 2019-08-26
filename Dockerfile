@@ -5,7 +5,7 @@
 FROM   ubuntu:18.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
-RUN echo "Force Rebuild From Scratch 2"
+RUN echo "Force Rebuild From Scratch 3"
 
 # get R from a CRAN archive 
 RUN apt-get update && \
@@ -226,7 +226,8 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    nano
+    nano \
+    jed
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
