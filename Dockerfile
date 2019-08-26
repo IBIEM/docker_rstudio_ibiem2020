@@ -5,7 +5,7 @@
 FROM   ubuntu:18.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
-RUN echo "Force Rebuild From Scratch 3"
+RUN echo "Force Rebuild From Scratch 2"
 
 # get R from a CRAN archive 
 RUN apt-get update && \
@@ -54,22 +54,15 @@ RUN apt-get update && \
    texlive-latex-extra \ 
    texlive-pstricks 
 
-# R-Studio Version:  1.2.1335 Released:  2019-04-08
+# R-Studio
 RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    gdebi-core \
-   libapparmor1 \
-   dpkg-sig
+   libapparmor1
 
-
-# https://github.com/inversepath/usbarmory-debian-base_image/issues/9
-RUN gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
-
-# https://www.rstudio.com/code-signing/
-RUN DEBIAN_FRONTEND=noninteractive wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.1335-amd64.deb && \
-    dpkg-sig --verify rstudio-server-1.2.1335-amd64.deb && \
-    gdebi -n rstudio-server-1.2.1335-amd64.deb && \
-    rm rstudio-server-1.2.1335-amd64.deb
+RUN DEBIAN_FRONTEND=noninteractive wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+RUN DEBIAN_FRONTEND=noninteractive gdebi -n rstudio-server-1.1.383-amd64.deb
+RUN rm rstudio-server-1.1.383-amd64.deb
 
 # dependency for R XML library
 RUN apt-get update && \
@@ -220,18 +213,6 @@ RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    python-rpy2
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    python-h5py
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    nano \
-    jed
-
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 RUN mkdir -p $MANUAL_BIN && \
    cd $MANUAL_BIN && \
    curl -s -o lefse.tar.gz https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
@@ -246,6 +227,11 @@ RUN mkdir -p $MANUAL_BIN && \
 
 # UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    python-h5py \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
