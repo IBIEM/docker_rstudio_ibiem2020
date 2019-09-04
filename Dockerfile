@@ -158,10 +158,18 @@ RUN apt-get update && \
    
 RUN pip install qiime
 
+# Install tidyverse and packages necessary for knitting to HTML 
+RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot'), \
+     repos='https://cran.revolutionanalytics.com/', \
+     dependencies=TRUE, \
+     clean = TRUE)"
+
+
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
+     dependencies=TRUE, \
+     clean = TRUE)"
 
 RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER','ALDEx2'))"
@@ -171,11 +179,15 @@ RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
 RUN Rscript -e \
     "install.packages(c('https://cran.r-project.org/src/contrib/Archive/mvtnorm/mvtnorm_1.0-8.tar.gz', \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
-    repos=NULL, type='source')"
+    repos=NULL, type='source', \
+    clean = TRUE)"
 
 RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
     repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
+    dependencies=TRUE, \
+    clean = TRUE)"
+
+
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
