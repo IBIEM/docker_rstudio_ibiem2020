@@ -159,7 +159,7 @@ RUN apt-get update && \
 RUN pip install qiime
 
 # Install tidyverse and packages necessary for knitting to HTML 
-RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot'), \
+RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rmarkdown'), \
      repos='https://cran.revolutionanalytics.com/', \
      dependencies=TRUE, \
      clean = TRUE)"
