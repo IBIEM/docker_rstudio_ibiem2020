@@ -240,7 +240,7 @@ RUN mkdir -p $MANUAL_BIN && \
 # UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq --no-install-recommends \
     python-h5py \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
