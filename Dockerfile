@@ -116,7 +116,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 # Configure environment
 ENV MANUAL_BIN /opt/bin
 ENV MANUAL_SHARE="/opt/share"
-ENV PATH $PATH:$MANUAL_BIN:/usr/lib/abyss/
+ENV PATH $PATH:$MANUAL_BIN:/usr/lib/abyss/:/usr/lib/rstudio-server/bin/pandoc
 ENV SHELL /bin/bash
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
