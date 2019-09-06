@@ -123,7 +123,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 # Configure environment
 ENV MANUAL_BIN /opt/bin
 ENV MANUAL_SHARE="/opt/share"
-ENV PATH $PATH:$MANUAL_BIN:/usr/lib/abyss/
+ENV PATH $PATH:$MANUAL_BIN:/usr/lib/abyss/:/usr/lib/rstudio-server/bin/pandoc
 ENV SHELL /bin/bash
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -165,10 +165,18 @@ RUN apt-get update && \
    
 RUN pip install qiime
 
+# Install tidyverse and packages necessary for knitting to HTML 
+RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rmarkdown'), \
+     repos='https://cran.revolutionanalytics.com/', \
+     dependencies=TRUE, \
+     clean = TRUE)"
+
+
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','tidyverse','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
+     dependencies=TRUE, \
+     clean = TRUE)"
 
 RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER','ALDEx2'))"
@@ -178,11 +186,15 @@ RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
 RUN Rscript -e \
     "install.packages(c('https://cran.r-project.org/src/contrib/Archive/mvtnorm/mvtnorm_1.0-8.tar.gz', \
     'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
-    repos=NULL, type='source')"
+    repos=NULL, type='source', \
+    clean = TRUE)"
 
 RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
     repos='https://cran.revolutionanalytics.com/', \
-    dependencies=TRUE)"
+    dependencies=TRUE, \
+    clean = TRUE)"
+
+
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
@@ -245,9 +257,16 @@ RUN mkdir -p $MANUAL_BIN && \
 # USER $RSTUDIO_USER
 
 # UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+    python-h5py
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+
+## END:   Additional libraries for IBIEM 2017-2018 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+RUN DEBIAN_FRONTEND=noninteractive apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+>>>>>>> master
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # Switch back to root to start up server
