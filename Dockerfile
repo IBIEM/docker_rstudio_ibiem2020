@@ -23,10 +23,25 @@ RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    apt-utils
 
-RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
-   r-base \
-   r-base-dev
+
+
+# Install R
+echo "deb http://cran.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/r.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+  # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+  apt-get update
+  apt-get install -y --no-install-recommends \
+    r-base=${R_VERSION}* \
+    r-base-core=${R_VERSION}* \
+    r-base-dev=${R_VERSION}* \
+    r-recommended=${R_VERSION}* \
+    r-base-html=${R_VERSION}* \
+    r-doc-html=${R_VERSION}* \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
+    libcairo2-dev \
+    libxt-dev
 
 #Utilities
 RUN apt-get update && \
