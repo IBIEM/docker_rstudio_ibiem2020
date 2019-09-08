@@ -194,6 +194,10 @@ RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','DT','
 RUN Rscript -e "source('https://bioconductor.org/biocLite.R'); \
     biocLite(pkgs=c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER','ALDEx2'))"
 
+
+RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
+    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER','ALDEx2'))"
+
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
 RUN Rscript -e \
