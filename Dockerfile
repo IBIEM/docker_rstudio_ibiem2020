@@ -26,11 +26,11 @@ RUN apt-get update && \
 
 
 # Install R
-echo "deb http://cran.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/r.list
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN echo "deb http://cran.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/r.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
   # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-  apt-get update
-  apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq --no-install-recommends install \
     r-base=${R_VERSION}* \
     r-base-core=${R_VERSION}* \
     r-base-dev=${R_VERSION}* \
@@ -75,7 +75,6 @@ RUN apt-get update && \
    gdebi-core \
    libapparmor1 \
    dpkg-sig
-
 
 # https://github.com/inversepath/usbarmory-debian-base_image/issues/9
 RUN gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
@@ -148,7 +147,6 @@ ENV RSTUDIO_USER guest
 RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
    seqtk \
-   ea-utils \
    chimeraslayer \
    tmux \
    jove \
@@ -278,6 +276,18 @@ RUN apt-get update && \
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+##------------------------------------------------------------
+# install fastq-mcf and fastq-multx from source since apt-get install causes problems
+RUN mkdir -p /usr/bin && \
+    cd /tmp && \
+    wget https://github.com/ExpressionAnalysis/ea-utils/archive/1.04.807.tar.gz && \
+    tar -zxf 1.04.807.tar.gz &&  \
+    cd ea-utils-1.04.807/clipper &&  \
+    make fastq-mcf fastq-multx &&  \
+    cp fastq-mcf fastq-multx /usr/bin &&  \
+    cd /tmp &&  \
+    rm -rf ea-utils-1.04.807
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
