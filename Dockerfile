@@ -80,7 +80,9 @@ RUN apt-get update && \
    dpkg-sig
 
 # https://github.com/inversepath/usbarmory-debian-base_image/issues/9
-RUN gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
+RUN mkdir ~/.gnupg && \
+    echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf && \
+    gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
 
 # https://www.rstudio.com/code-signing/
 RUN DEBIAN_FRONTEND=noninteractive wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
