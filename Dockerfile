@@ -7,6 +7,9 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 RUN echo "Force Rebuild From Scratch 3"
 
+ENV R_VERSION="3.6.1"
+ENV RSTUDIO_VERSION="1.2.1335"
+
 # get R from a CRAN archive 
 RUN apt-get update && \
    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
@@ -80,10 +83,10 @@ RUN apt-get update && \
 RUN gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
 
 # https://www.rstudio.com/code-signing/
-RUN DEBIAN_FRONTEND=noninteractive wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.1335-amd64.deb && \
-    dpkg-sig --verify rstudio-server-1.2.1335-amd64.deb && \
-    gdebi -n rstudio-server-1.2.1335-amd64.deb && \
-    rm rstudio-server-1.2.1335-amd64.deb
+RUN DEBIAN_FRONTEND=noninteractive wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    dpkg-sig --verify rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    gdebi -n rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    rm rstudio-server-${RSTUDIO_VERSION}-amd64.deb
 
 # dependency for R XML library
 RUN apt-get update && \
