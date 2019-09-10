@@ -274,13 +274,10 @@ RUN mkdir -p $MANUAL_BIN && \
 
 # USER $RSTUDIO_USER
 
-# UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
     python-h5py
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 ##------------------------------------------------------------
 # install fastq-mcf and fastq-multx from source since apt-get install causes problems
@@ -293,7 +290,16 @@ RUN mkdir -p /usr/bin && \
     cp fastq-mcf fastq-multx /usr/bin &&  \
     cd /tmp &&  \
     rm -rf ea-utils-1.04.807
+
+# UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+    man-db
+
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
