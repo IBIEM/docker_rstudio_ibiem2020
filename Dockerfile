@@ -295,7 +295,8 @@ RUN mkdir -p /usr/bin && \
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
     man-db \
-    manpages-posix
+    manpages-posix \
+    tree
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
