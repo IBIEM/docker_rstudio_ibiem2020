@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if ! [[ "$1" =~ ^(LOCAL|REMOTE|COMMAND)$ ]]; then
+if ! [[ "$1" =~ ^(LOCAL|REMOTE|COMMAND|SCRATCH)$ ]]; then
     printf "Run with LOCAL or REMOTE or COMMAND\n"
     printf "\tREMOTE: run RStudio\n"
     printf "\tLOCAL: run RStudio with access restricted to a web browser on the same machine\n"
@@ -61,6 +61,9 @@ if [ $REMOTE_OR_LOCAL == "COMMAND" ]; then
 elif [ $REMOTE_OR_LOCAL == "REMOTE" ]; then
     EXPOSE_PORT="${HOST_PORT}:8787"
     URL="http://`hostname -A | cut -f1 -d' '`:${HOST_PORT}/"
+elif [ $REMOTE_OR_LOCAL == "SCRATCH" ]; then
+    EXPOSE_PORT="${HOST_PORT}:8787"
+    URL="http://`hostname -A | cut -f1 -d' '`:${HOST_PORT}/"
 elif [ $REMOTE_OR_LOCAL == "LOCAL" ]; then
     EXPOSE_PORT="127.0.0.1:${HOST_PORT}:8787"
     URL="http://localhost:${HOST_PORT}/"
@@ -75,7 +78,12 @@ echo "expose argument: ${EXPOSE_PORT}"
 
 
 printf "\n${SEP_STRING} Running Docker ${SEP_STRING}"
-DOCKER_CMD="docker run --name ibiem -d -p ${EXPOSE_PORT} -e USERPASS=${MY_PASSWORD} -v ${WORK_DIR}:/home/guest -v ${DATA_DIR}:/data $DOCKER_IMAGENAME"
+DOCKER_CMD="docker run --name ibiem -d -p ${EXPOSE_PORT} -e USERPASS=${MY_PASSWORD} -v ${WORK_DIR}:/home/guest -v ${DATA_DIR}:/data"
+if [ $REMOTE_OR_LOCAL == "SCRATCH" ]; then
+    DOCKER_CMD="$DOCKER_CMD -v /scratch:/scratch"
+fi
+DOCKER_CMD="$DOCKER_CMD $DOCKER_IMAGENAME"
+
 echo $DOCKER_CMD
 $DOCKER_CMD
 
