@@ -7,15 +7,16 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 RUN echo "Force Rebuild From Scratch 3"
 
+ENV DEBIAN_FRONTEND noninteractive
 ENV R_VERSION="3.6.1"
 ENV RSTUDIO_VERSION="1.2.1335"
 
 # get R from a CRAN archive 
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    gnupg2
 # RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >>  /etc/apt/sources.list
-RUN DEBIAN_FRONTEND=noninteractive apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
 
 
 RUN apt-get update && \
@@ -23,7 +24,7 @@ RUN apt-get update && \
 
 # we want OpenBLAS for faster linear algebra as described here: http://brettklamer.com/diversions/statistical/faster-blas-in-r/
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    apt-utils
 
 
@@ -33,7 +34,7 @@ RUN echo "deb http://cran.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
   # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -yq --no-install-recommends install \
+    apt-get -yq --no-install-recommends install \
     r-base=${R_VERSION}* \
     r-base-core=${R_VERSION}* \
     r-base-dev=${R_VERSION}* \
@@ -48,7 +49,7 @@ RUN apt-get update && \
 
 #Utilities
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    vim \
    less \
    net-tools \
@@ -66,7 +67,7 @@ RUN apt-get update && \
 
 # we need TeX for the rmarkdown package in RStudio
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    texlive \ 
    texlive-base \ 
    texlive-latex-extra \ 
@@ -74,7 +75,7 @@ RUN apt-get update && \
 
 # R-Studio Version:  1.2.1335 Released:  2019-04-08
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    gdebi-core \
    libapparmor1 \
    dpkg-sig
@@ -85,14 +86,14 @@ RUN mkdir ~/.gnupg && \
     gpg2 --keyserver keys.gnupg.net --recv-keys 3F32EE77E331692F
 
 # https://www.rstudio.com/code-signing/
-RUN DEBIAN_FRONTEND=noninteractive wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+RUN wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
     dpkg-sig --verify rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
     gdebi -n rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
     rm rstudio-server-${RSTUDIO_VERSION}-amd64.deb
 
 # dependency for R XML library
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    libxml2 \ 
    libxml2-dev \
    libssl-dev
@@ -104,7 +105,7 @@ ADD ./conf /r-studio
 
 # Supervisord
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    supervisor && \
    mkdir -p /var/log/supervisor
 CMD ["/usr/bin/supervisord", "-n"]
@@ -124,10 +125,10 @@ ADD initialize.sh /
 
 # set the locale so RStudio doesn't complain about UTF-8
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    locales 
 RUN locale-gen en_US en_US.UTF-8
-RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN dpkg-reconfigure locales
 
 
 #########
@@ -150,7 +151,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV RSTUDIO_USER guest
 
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    seqtk \
    chimeraslayer \
    tmux \
@@ -247,7 +248,7 @@ RUN Rscript -e "install.packages(pkgs = c('coin'), \
 
 # python libraries: rpy2 (v. 2.1 or higher), numpy, matplotlib (v. 1.0 or higher), argparse 
 RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+   apt-get -yq install \
    python-rpy2
 
 RUN apt-get update && \
@@ -275,7 +276,7 @@ RUN mkdir -p $MANUAL_BIN && \
 # USER $RSTUDIO_USER
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+    apt-get install -yq --no-install-recommends \
     python-h5py
 
 
@@ -293,14 +294,14 @@ RUN mkdir -p /usr/bin && \
 
 # UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+    apt-get install -yq --no-install-recommends \
     man-db \
     manpages-posix \
     tree
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get clean && \
+RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
