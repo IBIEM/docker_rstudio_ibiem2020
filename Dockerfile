@@ -8,7 +8,7 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 RUN echo "Force Rebuild From Scratch 3"
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV R_VERSION="3.6.1"
+ENV R_VERSION="3.6.2"
 ENV RSTUDIO_VERSION="1.2.1335"
 
 # get R from a CRAN archive 
