@@ -292,12 +292,20 @@ RUN mkdir -p /usr/bin && \
     cd /tmp &&  \
     rm -rf ea-utils-1.04.807
 
-# UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Not sure what this block is for
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     man-db \
     manpages-posix \
     tree
+
+# UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Install RAxML-NG
+RUN mkdir -p $MANUAL_BIN download && \
+    wget --directory-prefix download --no-verbose https://github.com/amkozlov/raxml-ng/releases/download/0.9.0/raxml-ng_v0.9.0_linux_x86_64.zip && \
+    unzip -d download download/raxml-ng_v0.9.0_linux_x86_64.zip && \
+    mv download/raxml-ng $MANUAL_BIN && \
+    rm -rf download
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
