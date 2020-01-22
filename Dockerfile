@@ -194,13 +194,13 @@ RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rma
 
 
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','phangorn','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
     repos='https://cran.revolutionanalytics.com/', \
      dependencies=TRUE, \
      clean = TRUE)"
 
 RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
-    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','DECIPHER','ALDEx2'))"
+    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2'))"
 
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
@@ -308,6 +308,34 @@ RUN mkdir -p $MANUAL_BIN download && \
     unzip -d download download/raxml-ng_v0.9.0_linux_x86_64.zip && \
     mv download/raxml-ng $MANUAL_BIN && \
     rm -rf download
+
+#-----------------------------------------
+# Daniel's packages for phylogenetic trees
+#-----------------------------------------
+RUN Rscript -e "install.packages(pkg='phangorn',repos='http://archive.linux.duke.edu/cran/',INSTALL_opts = c('--no-docs', '--no-help'))" && \
+    Rscript -e "BiocManager::install(c('philr','DECIPHER','ggtree'),version='3.10')" && \
+    Rscript -e "devtools::install_github('reptalex/phylofactor',version='3.10')"
+
+#SEPP for greengenes
+RUN cd /opt && \
+    wget https://raw.github.com/smirarab/sepp-refs/master/gg/sepp-package.tar.bz && \
+    tar -xjf sepp-package.tar.bz && \
+    cd /opt/sepp-package/sepp && \
+    python3 setup.py config -c && \
+    chmod -R 555 /opt/sepp-package && \
+    rm /opt/sepp-package.tar.bz
+
+#GAPPA
+RUN cd /opt && \
+    git clone --recursive https://github.com/lczech/gappa.git /opt/gappa && \
+    cd /opt/gappa && \
+    make
+
+#EPA-NG
+RUN cd /opt && \
+    git clone --recursive https://github.com/Pbdas/epa-ng /opt/epa-ng && \
+    cd /opt/epa-ng && \
+    make
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
