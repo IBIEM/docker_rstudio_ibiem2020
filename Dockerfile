@@ -320,7 +320,8 @@ RUN Rscript -e "install.packages(pkg='phangorn',repos='http://archive.linux.duke
 #SEPP for greengenes
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
-    python3-setuptools && \
+    python3-setuptools \
+    cmake && \
     cd /opt && \
     wget --no-verbose https://raw.github.com/smirarab/sepp-refs/master/gg/sepp-package.tar.bz && \
     tar -xjf sepp-package.tar.bz && \
