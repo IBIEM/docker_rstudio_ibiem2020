@@ -321,7 +321,9 @@ RUN Rscript -e "install.packages(pkg='phangorn',repos='http://archive.linux.duke
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     python3-setuptools \
-    cmake && \
+    cmake \
+    bison \
+    flex && \
     cd /opt && \
     wget --no-verbose https://raw.github.com/smirarab/sepp-refs/master/gg/sepp-package.tar.bz && \
     tar -xjf sepp-package.tar.bz && \
