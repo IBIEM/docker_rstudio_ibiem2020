@@ -77,6 +77,7 @@ RUN apt-get update && \
 RUN apt-get update && \
    apt-get -yq install \
    gdebi-core \
+   dpkg-sig \
    libapparmor1
 
 RUN wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
