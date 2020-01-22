@@ -318,7 +318,10 @@ RUN Rscript -e "install.packages(pkg='phangorn',repos='http://archive.linux.duke
     Rscript -e "devtools::install_github('reptalex/phylofactor',version='3.10')"
 
 #SEPP for greengenes
-RUN cd /opt && \
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    python3-setuptools && \
+    cd /opt && \
     wget --no-verbose https://raw.github.com/smirarab/sepp-refs/master/gg/sepp-package.tar.bz && \
     tar -xjf sepp-package.tar.bz && \
     cd /opt/sepp-package/sepp && \
