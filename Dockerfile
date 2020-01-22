@@ -80,7 +80,7 @@ RUN apt-get update && \
    dpkg-sig \
    libapparmor1
 
-RUN wget https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+RUN wget --no-verbose https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
 RUN gdebi -n rstudio-server-1.1.383-amd64.deb
 RUN rm rstudio-server-1.1.383-amd64.deb
 # https://github.com/inversepath/usbarmory-debian-base_image/issues/9
@@ -287,7 +287,7 @@ RUN apt-get update && \
 # install fastq-mcf and fastq-multx from source since apt-get install causes problems
 RUN mkdir -p /usr/bin && \
     cd /tmp && \
-    wget https://github.com/ExpressionAnalysis/ea-utils/archive/1.04.807.tar.gz && \
+    wget  --no-verbose https://github.com/ExpressionAnalysis/ea-utils/archive/1.04.807.tar.gz && \
     tar -zxf 1.04.807.tar.gz &&  \
     cd ea-utils-1.04.807/clipper &&  \
     make fastq-mcf fastq-multx &&  \
@@ -305,7 +305,7 @@ RUN apt-get update && \
 # UNDER CONSTRUCTION: Nerd Work Zone >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Install RAxML-NG
 RUN mkdir -p $MANUAL_BIN download && \
-    wget --directory-prefix download --no-verbose https://github.com/amkozlov/raxml-ng/releases/download/0.9.0/raxml-ng_v0.9.0_linux_x86_64.zip && \
+    wget  --no-verbose --directory-prefix download --no-verbose https://github.com/amkozlov/raxml-ng/releases/download/0.9.0/raxml-ng_v0.9.0_linux_x86_64.zip && \
     unzip -d download download/raxml-ng_v0.9.0_linux_x86_64.zip && \
     mv download/raxml-ng $MANUAL_BIN && \
     rm -rf download
@@ -319,7 +319,7 @@ RUN Rscript -e "install.packages(pkg='phangorn',repos='http://archive.linux.duke
 
 #SEPP for greengenes
 RUN cd /opt && \
-    wget https://raw.github.com/smirarab/sepp-refs/master/gg/sepp-package.tar.bz && \
+    wget --no-verbose https://raw.github.com/smirarab/sepp-refs/master/gg/sepp-package.tar.bz && \
     tar -xjf sepp-package.tar.bz && \
     cd /opt/sepp-package/sepp && \
     python3 setup.py config -c && \
