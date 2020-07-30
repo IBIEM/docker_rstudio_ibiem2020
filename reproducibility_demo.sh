@@ -21,7 +21,7 @@ BASE_DIR=${2:-$BASE_DIR}
 
 WORK_DIR="$BASE_DIR/work"
 DATA_DIR="$BASE_DIR/data"
-DOCKER_IMAGENAME="ibiem/docker_rstudio_ibiem2019:latest"
+DOCKER_IMAGENAME="ibiem/docker_rstudio_ibiem2020:latest"
 SEP_STRING="\n--------------------------------------------------\n"
 
 # REMOTE_OR_LOCAL=$1

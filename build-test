@@ -1,3 +1,3 @@
 sudo docker rmi rstudio-ibiem-test-old
-sudo docker tag rstudio-ibiem-test2019 rstudio-ibiem-test-old
-sudo docker build --tag rstudio-ibiem-test2019 .
+sudo docker tag rstudio-ibiem-test2020 rstudio-ibiem-test-old
+sudo docker build --tag rstudio-ibiem-test2020 .
