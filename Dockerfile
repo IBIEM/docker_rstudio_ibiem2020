@@ -195,7 +195,7 @@ RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rma
 
 
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae','topicmodels'), \
     repos='https://cran.revolutionanalytics.com/', \
      dependencies=TRUE, \
      clean = TRUE)"
