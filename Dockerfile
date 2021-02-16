@@ -201,7 +201,7 @@ RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','
      clean = TRUE)"
 
 RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
-    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam'))"
+    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC'))"
 
 # need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
 # also needed to install multcomp dependencies: "sandwich","TH.data"
