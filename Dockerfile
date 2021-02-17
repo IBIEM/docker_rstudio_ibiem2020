@@ -10,6 +10,7 @@ RUN echo "Force Rebuild From Scratch 2"
 ENV DEBIAN_FRONTEND noninteractive
 ENV R_VERSION="3.6.2"
 ENV RSTUDIO_VERSION="1.2.1335"
+ENV CRAN_REPO="https://mran.revolutionanalytics.com/snapshot/2020-01-22"
 
 # get R from a CRAN archive 
 RUN apt-get update && \
@@ -189,14 +190,14 @@ RUN pip install qiime
 
 # Install tidyverse and packages necessary for knitting to HTML 
 RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rmarkdown'), \
-     repos='https://cran.revolutionanalytics.com/', \
+     repos=${CRAN_REPO}, \
      dependencies=TRUE, \
      clean = TRUE)"
 
 
 #  Add microbiome specific R and bioconductor packages
 RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae','topicmodels'), \
-    repos='https://cran.revolutionanalytics.com/', \
+    repos=${CRAN_REPO}, \
      dependencies=TRUE, \
      clean = TRUE)"
 
@@ -212,7 +213,7 @@ RUN Rscript -e \
     clean = TRUE)"
 
 RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
-    repos='https://cran.revolutionanalytics.com/', \
+    repos=${CRAN_REPO}, \
     dependencies=TRUE, \
     clean = TRUE)"
 
@@ -246,7 +247,7 @@ RUN mkdir -p $MANUAL_BIN && \
 # Install Lefse
 # R libraries: splines, stats4, survival, mvtnorm, modeltools, coin, MASS
 RUN Rscript -e "install.packages(pkgs = c('coin'), \
-    repos='https://cran.revolutionanalytics.com/', \
+    repos=${CRAN_REPO}, \
     dependencies=TRUE)"
 
 # python libraries: rpy2 (v. 2.1 or higher), numpy, matplotlib (v. 1.0 or higher), argparse 
