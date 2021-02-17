@@ -5,8 +5,6 @@
 FROM   ubuntu:18.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
-RUN echo "Force Rebuild From Scratch 2"
-
 ENV DEBIAN_FRONTEND noninteractive
 ENV R_VERSION="3.6.2"
 ENV RSTUDIO_VERSION="1.2.1335"
@@ -17,7 +15,8 @@ RUN apt-get update && \
    apt-get -yq install \
    gnupg2
 # RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >>  /etc/apt/sources.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 
 
 RUN apt-get update && \
@@ -32,7 +31,6 @@ RUN apt-get update && \
 
 # Install R
 RUN echo "deb http://cran.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/r.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
   # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 RUN apt-get update && \
     apt-get -yq --no-install-recommends install \
