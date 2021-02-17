@@ -184,7 +184,7 @@ RUN apt-get update && \
    librdp-taxonomy-tree-java \
    clustalw
    
-RUN pip install qiime
+# RUN pip install qiime
 
 # Install tidyverse and packages necessary for knitting to HTML 
 RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rmarkdown'), \
