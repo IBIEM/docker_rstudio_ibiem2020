@@ -265,7 +265,7 @@ RUN apt-get update && \
 
 RUN mkdir -p $MANUAL_BIN && \
    cd $MANUAL_BIN && \
-   curl -s -o lefse.tar.gz https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
+   curl -L -s -o lefse.tar.gz https://github.com/biobakery/lefse/archive/1.1.tar.gz && \
    tar --strip-components=1 -zxf lefse.tar.gz && \
    chmod 555 format_input.py lefse.py \
       lefse2circlader.py plot_cladogram.py \
