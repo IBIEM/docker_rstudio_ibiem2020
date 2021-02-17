@@ -6,9 +6,9 @@ FROM   ubuntu:18.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV R_VERSION="3.6.2"
+ENV R_VERSION="3.6.3"
 ENV RSTUDIO_VERSION="1.2.1335"
-ENV CRAN_REPO="https://mran.revolutionanalytics.com/snapshot/2020-01-22"
+ENV CRAN_REPO='https://mran.revolutionanalytics.com/snapshot/2020-04-23'
 
 # get R from a CRAN archive 
 RUN apt-get update && \
