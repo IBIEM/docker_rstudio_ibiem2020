@@ -262,9 +262,6 @@ RUN apt-get update && \
     nano \
     jed
 
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 RUN mkdir -p $MANUAL_BIN && \
    cd $MANUAL_BIN && \
    curl -s -o lefse.tar.gz https://bitbucket.org/nsegata/lefse/get/1.0.8.tar.gz && \
