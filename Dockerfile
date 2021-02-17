@@ -182,7 +182,8 @@ RUN apt-get update && \
    rdp-classifier \
    rdp-alignment \
    librdp-taxonomy-tree-java \
-   clustalw
+   clustalw \
+   fastqc
    
 # RUN pip install qiime
 
@@ -232,7 +233,7 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
    rm -rf ${TRANSABYSS_VERSION}.tar.gz transabyss-${TRANSABYSS_VERSION}
 
 # DukeDSClient
-RUN pip install DukeDSClient
+RUN pip install DukeDSClient multiqc
 
 # Install FastTree and FastTreeMP
 RUN mkdir -p $MANUAL_BIN && \
