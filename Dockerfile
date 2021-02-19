@@ -7,7 +7,7 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV R_VERSION="3.6.3"
-ENV RSTUDIO_VERSION="1.2.1335"
+ENV RSTUDIO_VERSION="1.2.5042"
 ENV CRAN_REPO="'https://mran.revolutionanalytics.com/snapshot/2020-04-23'"
 
 # get R from a CRAN archive 
@@ -75,13 +75,19 @@ RUN apt-get update && \
 # R-Studio
 RUN apt-get update && \
    apt-get -yq install \
+   ca-certificates \
+   wget \
    gdebi-core \
+   libssl1.1 \
+   libssl-dev \
    dpkg-sig \
-   libapparmor1
+   python3-ldap3
 
-RUN wget --no-verbose https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
-RUN gdebi -n rstudio-server-1.1.383-amd64.deb
-RUN rm rstudio-server-1.1.383-amd64.deb
+
+
+# RUN wget --no-verbose https://download2.rstudio.org/rstudio-server-1.1.383-amd64.deb
+# RUN gdebi -n rstudio-server-1.1.383-amd64.deb
+# RUN rm rstudio-server-1.1.383-amd64.deb
 # https://github.com/inversepath/usbarmory-debian-base_image/issues/9
 RUN mkdir ~/.gnupg && \
     echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf && \
@@ -162,20 +168,18 @@ RUN apt-get update && \
    htop \
    libudunits2-dev \
    software-properties-common \
-   sra-toolkit \
    libgdal-dev \
    build-essential \
    python-dev \
    python3-pip \
-   python-numpy \
-   python-matplotlib \
-   python-pandas \
-   ipython \
+   python3-numpy \
+   python3-matplotlib \
+   python3-pandas \
    samtools \
    rna-star \
    bwa \
    trimmomatic \
-   python-igraph \
+   python3-igraph \
    abyss \
    bc \
    rdp-readseq \
@@ -184,6 +188,7 @@ RUN apt-get update && \
    librdp-taxonomy-tree-java \
    clustalw \
    fastqc
+#    sra-toolkit ipython \
    
 # RUN pip install qiime
 
@@ -343,20 +348,37 @@ RUN cd /opt && \
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+# SHOGUN
+# https://github.com/knights-lab/BURST/releases
+# https://github.com/knights-lab/UTree/releases/tag/v2.0c
+
+RUN curl -L -s https://github.com/knights-lab/UTree/releases/download/v2.0c/utree-v2.0.c-linux-64.tar.gz | \
+   tar -zx && \
+   chmod 555 utree-*_gg && \
+   mv utree-*_gg $MANUAL_BIN
+ 
+RUN curl -L -s https://github.com/knights-lab/BURST/releases/download/v1.0/burst-v1.0-linux-64.tar.gz | \
+   tar -zx && \
+   chmod 555 burst* && \
+   mv burst* $MANUAL_BIN
+
 RUN curl -L -s -o shogun.tar.gz https://github.com/knights-lab/SHOGUN/archive/v1.0.8.tar.gz && \
    pip3 install --no-cache-dir shogun.tar.gz && \
    rm shogun.tar.gz
 
+# MetaPhlAn
+# https://pypi.org/project/MetaPhlAn/
 RUN pip3 install --no-cache-dir MetaPhlAn
 
+# Kraken2
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     kraken2 \
     bowtie2
 
-
+# kaiju
 RUN mkdir kaiju && \
-  curl -L -s kaiju.tar.gz https://github.com/bioinformatics-centre/kaiju/archive/v1.7.4.tar.gz | \
+  curl -L -s https://github.com/bioinformatics-centre/kaiju/archive/v1.7.4.tar.gz | \
    tar -zx -C kaiju --strip-components=1 && \
    cd kaiju/src && \
    make && \
