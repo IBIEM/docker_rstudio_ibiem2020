@@ -170,7 +170,7 @@ RUN apt-get update && \
    software-properties-common \
    libgdal-dev \
    build-essential \
-   python-dev \
+   python3-dev \
    python3-pip \
    python3-numpy \
    python3-matplotlib \
@@ -256,17 +256,11 @@ RUN Rscript -e "install.packages(pkgs = c('coin'), \
 
 # python libraries: rpy2 (v. 2.1 or higher), numpy, matplotlib (v. 1.0 or higher), argparse 
 RUN apt-get update && \
-   apt-get -yq install \
-   python-rpy2
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    python-h5py
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    nano \
-    jed
+   apt-get install -y --no-install-recommends \
+   python3-rpy2 \
+   python3-h5py \
+   nano \
+   jed
 
 RUN mkdir -p $MANUAL_BIN && \
    cd $MANUAL_BIN && \
@@ -279,11 +273,6 @@ RUN mkdir -p $MANUAL_BIN && \
    rm lefse.tar.gz
 
 # USER $RSTUDIO_USER
-
-RUN apt-get update && \
-    apt-get install -yq --no-install-recommends \
-    python-h5py
-
 
 ##------------------------------------------------------------
 # install fastq-mcf and fastq-multx from source since apt-get install causes problems
@@ -382,6 +371,7 @@ RUN mkdir kaiju && \
    tar -zx -C kaiju --strip-components=1 && \
    cd kaiju/src && \
    make && \
+   cd ../..  && \
    mv kaiju/bin/* $MANUAL_BIN  && \
    rm -rf kaiju
 
