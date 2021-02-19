@@ -2,7 +2,7 @@
 #
 # VERSION 1.1
 
-FROM   ubuntu:18.04
+FROM   ubuntu:20.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -166,7 +166,7 @@ RUN apt-get update && \
    libgdal-dev \
    build-essential \
    python-dev \
-   python-pip \
+   python3-pip \
    python-numpy \
    python-matplotlib \
    python-pandas \
@@ -233,7 +233,7 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
    rm -rf ${TRANSABYSS_VERSION}.tar.gz transabyss-${TRANSABYSS_VERSION}
 
 # DukeDSClient
-RUN pip install DukeDSClient multiqc
+RUN pip3 install --no-cache-dir DukeDSClient multiqc
 
 # Install FastTree and FastTreeMP
 RUN mkdir -p $MANUAL_BIN && \
@@ -342,6 +342,26 @@ RUN cd /opt && \
     make
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+RUN curl -L -s -o shogun.tar.gz https://github.com/knights-lab/SHOGUN/archive/v1.0.8.tar.gz && \
+   pip3 install --no-cache-dir shogun.tar.gz && \
+   rm shogun.tar.gz
+
+RUN pip3 install --no-cache-dir MetaPhlAn
+
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    kraken2 \
+    bowtie2
+
+
+RUN mkdir kaiju && \
+  curl -L -s kaiju.tar.gz https://github.com/bioinformatics-centre/kaiju/archive/v1.7.4.tar.gz | \
+   tar -zx -C kaiju --strip-components=1 && \
+   cd kaiju/src && \
+   make && \
+   mv kaiju/bin/* $MANUAL_BIN  && \
+   rm -rf kaiju
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
