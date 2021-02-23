@@ -360,7 +360,8 @@ RUN pip3 install --no-cache-dir MetaPhlAn
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     kraken2 \
-    bowtie2
+    bowtie2 \
+    cutadapt
 
 # kaiju
 RUN mkdir kaiju && \
