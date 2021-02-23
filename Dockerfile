@@ -172,9 +172,6 @@ RUN apt-get update && \
    build-essential \
    python3-dev \
    python3-pip \
-   python3-numpy \
-   python3-matplotlib \
-   python3-pandas \
    samtools \
    rna-star \
    bwa \
@@ -391,3 +388,18 @@ EXPOSE 8787
 #EXPOSE 3838
 
 CMD ["/usr/bin/supervisord"]
+
+#----------------------------------------
+# Not working yet:
+#----------------------------------------
+# metaphlan -h
+# lefser
+# ANCOMBC
+# old lefse
+# topicmodels
+
+# SHOGUN
+# shogun_bt2_db
+# shogun_bt2_lca
+# shogun_utree_db
+# shogun_utree_lca
