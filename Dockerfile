@@ -6,9 +6,9 @@ FROM   ubuntu:20.04
 MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV R_VERSION="3.6.3"
+ENV R_VERSION="4.0.4"
 ENV RSTUDIO_VERSION="1.2.5042"
-ENV CRAN_REPO="'https://mran.revolutionanalytics.com/snapshot/2020-04-23'"
+ENV CRAN_REPO="'https://mran.revolutionanalytics.com/snapshot/2021-02-16'"
 
 # get R from a CRAN archive 
 RUN apt-get update && \
@@ -30,7 +30,7 @@ RUN apt-get update && \
 
 
 # Install R
-RUN echo "deb http://cran.r-project.org/bin/linux/ubuntu bionic-cran35/" > /etc/apt/sources.list.d/r.list
+RUN echo "deb http://cran.r-project.org/bin/linux/ubuntu focal-cran40//" > /etc/apt/sources.list.d/r.list
   # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 RUN apt-get update && \
     apt-get -yq --no-install-recommends install \
@@ -405,7 +405,6 @@ CMD ["/usr/bin/supervisord"]
 #----------------------------------------
 # Not working yet:
 #----------------------------------------
-# metaphlan -h
 # lefser
 # ANCOMBC
 # old lefse
