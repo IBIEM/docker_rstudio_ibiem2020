@@ -176,7 +176,6 @@ RUN apt-get update && \
    rna-star \
    bwa \
    trimmomatic \
-   python3-igraph \
    abyss \
    bc \
    rdp-readseq \
@@ -185,7 +184,7 @@ RUN apt-get update && \
    librdp-taxonomy-tree-java \
    clustalw \
    fastqc
-#    sra-toolkit ipython \
+#    sra-toolkit ipython python3-igraph \
    
 # RUN pip install qiime
 
@@ -237,7 +236,9 @@ RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
 # DukeDSClient
 RUN pip3 install --no-cache-dir DukeDSClient multiqc
 
+# --------------------------------
 # Install FastTree and FastTreeMP
+# --------------------------------
 RUN mkdir -p $MANUAL_BIN && \
    wget --no-verbose -O $MANUAL_BIN/FastTree.c http://www.microbesonline.org/fasttree/FastTree-2.1.10.c && \
    gcc -DUSE_DOUBLE -O3 -finline-functions -funroll-loops -Wall -o $MANUAL_BIN/FastTree $MANUAL_BIN/FastTree.c -lm && \
@@ -245,19 +246,30 @@ RUN mkdir -p $MANUAL_BIN && \
    chmod 555 $MANUAL_BIN/FastTree $MANUAL_BIN/FastTreeMP && \
    rm $MANUAL_BIN/FastTree*.c
 
+# -----------------
 # Install Lefse
+# -----------------
 # R libraries: splines, stats4, survival, mvtnorm, modeltools, coin, MASS
 RUN Rscript -e "install.packages(pkgs = c('coin'), \
     repos=${CRAN_REPO}, \
     dependencies=TRUE)"
 
+
 # python libraries: rpy2 (v. 2.1 or higher), numpy, matplotlib (v. 1.0 or higher), argparse 
-RUN apt-get update && \
-   apt-get install -y --no-install-recommends \
-   python3-rpy2 \
-   python3-h5py \
-   nano \
-   jed
+
+RUN pip3 install --no-cache-dir \
+    numpy \
+    matplotlib \
+    rpy2 \
+    h5py \
+    argparse
+
+# RUN apt-get update && \
+#    apt-get install -y --no-install-recommends \
+#    python3-rpy2 \
+#    python3-h5py \
+#    nano \
+#    jed
 
 RUN mkdir -p $MANUAL_BIN && \
    cd $MANUAL_BIN && \
