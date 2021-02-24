@@ -12,7 +12,7 @@ ENV CRAN_REPO="'https://mran.revolutionanalytics.com/snapshot/2020-04-23'"
 
 # get R from a CRAN archive 
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    gnupg2
 # RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic/" >>  /etc/apt/sources.list
 # RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  E084DAB9
@@ -24,7 +24,7 @@ RUN apt-get update && \
 
 # we want OpenBLAS for faster linear algebra as described here: http://brettklamer.com/diversions/statistical/faster-blas-in-r/
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    apt-utils
 
 
@@ -48,7 +48,7 @@ RUN apt-get update && \
 
 #Utilities
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    vim \
    less \
    net-tools \
@@ -66,7 +66,7 @@ RUN apt-get update && \
 
 # we need TeX for the rmarkdown package in RStudio
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    texlive \ 
    texlive-base \ 
    texlive-latex-extra \ 
@@ -74,7 +74,7 @@ RUN apt-get update && \
 
 # R-Studio
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    ca-certificates \
    wget \
    gdebi-core \
@@ -101,7 +101,7 @@ RUN wget --no-verbose https://download2.rstudio.org/server/bionic/amd64/rstudio-
 
 # dependency for R XML library
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    libxml2 \ 
    libxml2-dev \
    libssl-dev
@@ -113,7 +113,7 @@ ADD ./conf /r-studio
 
 # Supervisord
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    supervisor && \
    mkdir -p /var/log/supervisor
 CMD ["/usr/bin/supervisord", "-n"]
@@ -133,7 +133,7 @@ ADD initialize.sh /
 
 # set the locale so RStudio doesn't complain about UTF-8
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    locales 
 RUN locale-gen en_US en_US.UTF-8
 RUN dpkg-reconfigure locales
@@ -159,7 +159,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV RSTUDIO_USER guest
 
 RUN apt-get update && \
-   apt-get -yq install \
+    apt-get -yq --no-install-recommends install \
    seqtk \
    chimeraslayer \
    tmux \
