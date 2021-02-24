@@ -196,28 +196,13 @@ RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rma
 
 
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae','topicmodels'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae','topicmodels','robCompositions'), \
     repos=${CRAN_REPO}, \
      dependencies=TRUE, \
      clean = TRUE)"
 
 RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
     BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC','lefser'))"
-
-# need to install older version of multcomp to avoid dependency on newer mvtnorm, which depends on newer R
-# also needed to install multcomp dependencies: "sandwich","TH.data"
-RUN Rscript -e \
-    "install.packages(c('https://cran.r-project.org/src/contrib/Archive/mvtnorm/mvtnorm_1.0-8.tar.gz', \
-    'https://cran.r-project.org/src/contrib/Archive/multcomp/multcomp_1.4-8.tar.gz'), \
-    repos=NULL, type='source', \
-    clean = TRUE)"
-
-RUN Rscript -e "install.packages(pkgs = c('robCompositions'), \
-    repos=${CRAN_REPO}, \
-    dependencies=TRUE, \
-    clean = TRUE)"
-
-
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
