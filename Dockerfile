@@ -332,8 +332,10 @@ RUN cd /opt && \
     make
 
 # UNDER CONSTRUCTION: Nerd Work Zone <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
+# --------------------
 # SHOGUN
+# --------------------
+
 # https://github.com/knights-lab/BURST/releases
 # https://github.com/knights-lab/UTree/releases/tag/v2.0c
 
@@ -347,11 +349,22 @@ RUN curl -L -s https://github.com/knights-lab/BURST/releases/download/v1.0/burst
    chmod 555 burst* && \
    mv burst* $MANUAL_BIN
 
+# Not sure if ninja and dojo are necessary for shogun, it mentions them here: <https://github.com/danknights/SHOGUN>
+RUN curl -L -s -o ninja.tar.gz https://github.com/knights-lab/NINJA-utils/archive/v0.0.1.tar.gz && \
+   pip3 install --no-cache-dir ninja.tar.gz && \
+   rm ninja.tar.gz
+
+RUN curl -L -s -o dojo.tar.gz https://github.com/knights-lab/DOJO/archive/v0.0.1.tar.gz && \
+   pip3 install --no-cache-dir dojo.tar.gz && \
+   rm dojo.tar.gz
+
 RUN curl -L -s -o shogun.tar.gz https://github.com/knights-lab/SHOGUN/archive/v1.0.8.tar.gz && \
    pip3 install --no-cache-dir shogun.tar.gz && \
    rm shogun.tar.gz
 
+# --------------------
 # MetaPhlAn
+# --------------------
 # https://pypi.org/project/MetaPhlAn/
 RUN pip3 install --no-cache-dir MetaPhlAn
 
@@ -362,7 +375,9 @@ RUN apt-get update && \
     bowtie2 \
     cutadapt
 
+# --------------------
 # kaiju
+# --------------------
 RUN mkdir kaiju && \
   curl -L -s https://github.com/bioinformatics-centre/kaiju/archive/v1.7.4.tar.gz | \
    tar -zx -C kaiju --strip-components=1 && \
