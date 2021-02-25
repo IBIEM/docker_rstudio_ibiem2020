@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 *.Rproj
+build_output_*.txt
+docker_build_output_*.txt

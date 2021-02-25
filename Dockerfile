@@ -7,6 +7,7 @@ MAINTAINER Mark McCahill "mark.mccahill@duke.edu"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV R_VERSION="4.0.4"
+ENV BIOCONDUCTOR_VERSION="3.12"
 ENV RSTUDIO_VERSION="1.2.5042"
 ENV CRAN_REPO="'https://mran.revolutionanalytics.com/snapshot/2021-02-16'"
 
@@ -202,7 +203,7 @@ RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','
      clean = TRUE)"
 
 RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
-    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC','lefser'))"
+    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC','lefser'),version=$BIOCONDUCTOR_VERSION)"
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
@@ -299,8 +300,8 @@ RUN mkdir -p $MANUAL_BIN download && \
 # Daniel's packages for phylogenetic trees
 #-----------------------------------------
 RUN Rscript -e "install.packages(pkg='phangorn',repos='http://archive.linux.duke.edu/cran/',INSTALL_opts = c('--no-docs', '--no-help'))" && \
-    Rscript -e "BiocManager::install(c('philr','DECIPHER','ggtree'),version='3.10')" && \
-    Rscript -e "devtools::install_github('reptalex/phylofactor',version='3.10')"
+    Rscript -e "BiocManager::install(c('philr','DECIPHER','ggtree'),version=$BIOCONDUCTOR_VERSION)" && \
+    Rscript -e "devtools::install_github('reptalex/phylofactor',version=$BIOCONDUCTOR_VERSION)"
 
 #SEPP for greengenes
 RUN apt-get update && \
@@ -388,7 +389,9 @@ EXPOSE 8787
 CMD ["/usr/bin/supervisord"]
 
 #----------------------------------------
-# Not working yet:
+# TODO
+#----------------------------------------
+## Not working yet:
 #----------------------------------------
 # lefser
 # ANCOMBC
@@ -400,3 +403,6 @@ CMD ["/usr/bin/supervisord"]
 # shogun_bt2_lca
 # shogun_utree_db
 # shogun_utree_lca
+#----------------------------------------
+## Add version to all Bioconductor calls: BiocManager
+#----------------------------------------
