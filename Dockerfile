@@ -354,9 +354,9 @@ RUN curl -L -s -o ninja.tar.gz https://github.com/knights-lab/NINJA-utils/archiv
    pip3 install --no-cache-dir ninja.tar.gz && \
    rm ninja.tar.gz
 
-RUN curl -L -s -o dojo.tar.gz https://github.com/knights-lab/DOJO/archive/v0.0.1.tar.gz && \
-   pip3 install --no-cache-dir dojo.tar.gz && \
-   rm dojo.tar.gz
+# RUN curl -L -s -o dojo.tar.gz https://github.com/knights-lab/DOJO/archive/v0.0.1.tar.gz && \
+#    pip3 install --no-cache-dir dojo.tar.gz && \
+#    rm dojo.tar.gz
 
 RUN curl -L -s -o shogun.tar.gz https://github.com/knights-lab/SHOGUN/archive/v1.0.8.tar.gz && \
    pip3 install --no-cache-dir shogun.tar.gz && \
