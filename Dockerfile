@@ -184,7 +184,8 @@ RUN apt-get update && \
    rdp-alignment \
    librdp-taxonomy-tree-java \
    clustalw \
-   fastqc
+   fastqc \
+   libgsl-dev gsl-bin # for topicmodels
 #    sra-toolkit ipython python3-igraph \
    
 # RUN pip install qiime
@@ -393,8 +394,6 @@ CMD ["/usr/bin/supervisord"]
 #----------------------------------------
 ## Not working yet:
 #----------------------------------------
-# lefser
-# ANCOMBC
 # old lefse
 # topicmodels
 
