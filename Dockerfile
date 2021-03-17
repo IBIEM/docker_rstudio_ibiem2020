@@ -186,6 +186,7 @@ RUN apt-get update && \
    clustalw \
    fastqc \
    ncbi-blast+ \
+   mothur \
    libgsl-dev gsl-bin # for topicmodels
 #    sra-toolkit ipython python3-igraph \
    
