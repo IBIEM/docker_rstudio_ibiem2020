@@ -207,7 +207,8 @@ RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','
 
 RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
     BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC','lefser', 'annotate','Biostrings'),version=$BIOCONDUCTOR_VERSION)" && \
-    Rscript -e "devtools::install_github('mhahsler/rBLAST',version=$BIOCONDUCTOR_VERSION)"
+    Rscript -e "devtools::install_github('mhahsler/rBLAST')" && \
+    Rscript -e "devtools::install_github('yiluheihei/microbiomeMarker')" && \
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
