@@ -185,6 +185,8 @@ RUN apt-get update && \
    librdp-taxonomy-tree-java \
    clustalw \
    fastqc \
+   ncbi-blast+ \
+   mothur \
    libgsl-dev gsl-bin # for topicmodels
 #    sra-toolkit ipython python3-igraph \
    
@@ -198,13 +200,15 @@ RUN Rscript -e "install.packages(pkgs = c('tidyverse','caTools','rprojroot','rma
 
 
 #  Add microbiome specific R and bioconductor packages
-RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae','topicmodels','robCompositions'), \
+RUN Rscript -e "install.packages(pkgs = c('fs','ips','unvotes','DT','sandwich','TH.data', 'here', 'sf', 'spdep', 'agricolae','topicmodels','robCompositions','rentrez'), \
     repos=${CRAN_REPO}, \
      dependencies=TRUE, \
      clean = TRUE)"
 
 RUN Rscript -e "if (!requireNamespace('BiocManager')){install.packages('BiocManager')}; \
-    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC','lefser'),version=$BIOCONDUCTOR_VERSION)"
+    BiocManager::install(c('dada2','ShortRead','phyloseq','msa','DESeq2','metagenomeSeq','ALDEx2','decontam','ANCOMBC','lefser', 'annotate','Biostrings'),version=$BIOCONDUCTOR_VERSION)" && \
+    Rscript -e "devtools::install_github('mhahsler/rBLAST')" && \
+    Rscript -e "devtools::install_github('yiluheihei/microbiomeMarker')" && \
 
 # Trans-ABySS
 RUN mkdir -p $MANUAL_BIN $MANUAL_SHARE ; \
