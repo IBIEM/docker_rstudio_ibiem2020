@@ -391,6 +391,16 @@ RUN mkdir kaiju && \
    mv kaiju/bin/* $MANUAL_BIN  && \
    rm -rf kaiju
 
+# --------------------
+# shi7
+# --------------------
+RUN curl -L -s -o shi7.tar.gz https://github.com/knights-lab/shi7/archive/refs/tags/v1.0.2.tar.gz && \
+   pip3 install --no-cache-dir shi7.tar.gz && \
+   rm shi7.tar.gz
+
+# --------------------
+# Final apt cleanup
+# --------------------
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
