@@ -406,6 +406,8 @@ RUN apt-get clean && \
 
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+COPY port_and_password.sh /usr/lib/rstudio-server/bin/port_and_password
+
 # Switch back to root to start up server
 USER root
 
