@@ -398,18 +398,26 @@ RUN curl -L -s -o shi7.tar.gz https://github.com/knights-lab/shi7/archive/refs/t
    pip3 install --no-cache-dir shi7.tar.gz && \
    rm shi7.tar.gz
 
-# --------------------
-# Final apt cleanup
-# --------------------
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 ## END:   Additional libraries for IBIEM 2018-2019 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# --------------------
+# Get running on DCC
+# --------------------
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    iproute2
+
 ENV PATH $PATH:/usr/lib/rstudio-server/bin
 COPY port_and_password.sh /usr/lib/rstudio-server/bin/port_and_password
 
 # Switch back to root to start up server
 USER root
+
+# --------------------
+# Final apt cleanup
+# --------------------
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 
 # expose the RStudio IDE port
