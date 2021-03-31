@@ -409,6 +409,8 @@ RUN apt-get update && \
 
 ENV PATH $PATH:/usr/lib/rstudio-server/bin
 COPY port_and_password.sh /usr/lib/rstudio-server/bin/port_and_password
+COPY rstudio_auth.sh /usr/lib/rstudio-server/bin/rstudio_auth
+COPY ldap_auth.py /usr/lib/rstudio-server/bin/ldap_auth
 
 # Switch back to root to start up server
 USER root
