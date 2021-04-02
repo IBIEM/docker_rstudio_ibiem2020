@@ -22,6 +22,25 @@ that the build file will complain about not being able fetch a specific library.
 If this happens, look through the file list here: http://cran.r-project.org/src/contrib/
 to find the new version of the library and update the Dockerfile.
 
+## How to run in Singularity
+```
+singularity exec docker://ibiem/docker_rstudio_ibiem2020 port_and_password
+```
+
+### How to run in Singularity on the Duke Compute Cluster
+
+```
+srun singularity exec docker://ibiem/docker_rstudio_ibiem2020 port_and_password
+```
+
+```
+srun -A [ACCOUNT] -p [PARTITION] --mem=20G --cpus-per-task=10 singularity exec docker://ibiem/docker_rstudio_ibiem2020 port_and_password
+```
+
+FIXME!!!!!!
+
+
+
 ## How to run
 
 Run using the default password from the Dockerfile build script:
