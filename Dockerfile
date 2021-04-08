@@ -419,9 +419,10 @@ COPY ldap_auth.py /usr/lib/rstudio-server/bin/ldap_auth
 # Install a few dependencies for iCommands, text editing, and monitoring instances
 RUN apt-get update && apt-get install -y lsb-release wget apt-transport-https curl supervisor nginx gnupg2 libfuse2 nano htop gcc less nodejs software-properties-common apt-utils glances
 
-RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" -O && \
-    dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb && \
-    rm libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
+# RUN curl "http://ftp.se.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb" -O && \
+#     dpkg -i libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb && \
+#     rm libssl1.0.0_1.0.1t-1+deb8u8_amd64.deb
+RUN apt-get update && apt-get install -y libssl1.1 libssl-dev # above fails because of dependencies, so trying this
 
 ### iCommands
 RUN wget https://files.renci.org/pub/irods/releases/4.1.10/ubuntu14/irods-icommands-4.1.10-ubuntu14-x86_64.deb && dpkg -i *.deb
