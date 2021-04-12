@@ -398,6 +398,11 @@ RUN mkdir kaiju && \
 RUN curl -L -s -o shi7.tar.gz https://github.com/knights-lab/shi7/archive/refs/tags/v1.0.2.tar.gz && \
    pip3 install --no-cache-dir shi7.tar.gz && \
    rm shi7.tar.gz
+   
+# Fiddle with trimmomatic so shi7 is happy
+RUN curl -L -s -o /opt/bin/trimmomatic https://raw.githubusercontent.com/bioconda/bioconda-recipes/master/recipes/trimmomatic/trimmomatic.py && \
+   chmod 555 /opt/bin/trimmomatic && \
+   ln -s /usr/share/java/trimmomatic-0.39.jar /opt/bin/trimmomatic.jar
 
 # --------------------
 # Final apt cleanup
