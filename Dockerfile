@@ -377,7 +377,8 @@ RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     kraken2 \
     bowtie2 \
-    cutadapt
+    cutadapt \
+    rsync
 
 # --------------------
 # kaiju
