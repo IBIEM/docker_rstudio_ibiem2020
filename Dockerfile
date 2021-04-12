@@ -399,7 +399,8 @@ RUN curl -L -s -o shi7.tar.gz https://github.com/knights-lab/shi7/archive/refs/t
    pip3 install --no-cache-dir shi7.tar.gz && \
    tar -zxf shi7.tar.gz && \
    mv shi7-1.0.2/bin/gotta_split_linux /opt/bin/gotta_split && \
-   mv shi7-1.0.2/bin/shi7_trimmer_linux /opt/bin/shi7_trimmer && \   
+   mv shi7-1.0.2/bin/shi7_trimmer_linux /opt/bin/shi7_trimmer && \
+   chmod 555 /opt/bin/gotta_split /opt/bin/shi7_trimmer && \
    rm -rf shi7.tar.gz shi7-1.0.2
    
 # Use trimmomatic.py from bioconda to make shi7 happy
