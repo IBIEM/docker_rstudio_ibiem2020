@@ -1,7 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Wrapper script for Java Conda packages that ensures that the java runtime
 # is invoked with the right options. Adapted from the bash script (http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in/246128#246128).
+
+# This script modified from https://raw.githubusercontent.com/bioconda/bioconda-recipes/master/recipes/trimmomatic/trimmomatic.py
 
 #
 # Program Parameters
@@ -85,7 +87,7 @@ def main():
     we copy the jar file, lib, and resources to the exec_dir directory.
     """
     (mem_opts, prop_opts, pass_args, exec_dir) = jvm_opts(sys.argv[1:])
-    jar_dir = exec_dir if exec_dir else real_dirname(sys.argv[0])
+    jar_dir = exec_dir if exec_dir else "/usr/share/java/"
 
     if pass_args != [] and pass_args[0].startswith('eu'):
         jar_arg = '-cp'

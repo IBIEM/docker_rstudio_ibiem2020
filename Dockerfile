@@ -399,10 +399,8 @@ RUN curl -L -s -o shi7.tar.gz https://github.com/knights-lab/shi7/archive/refs/t
    pip3 install --no-cache-dir shi7.tar.gz && \
    rm shi7.tar.gz
    
-# Fiddle with trimmomatic so shi7 is happy
-RUN curl -L -s -o /opt/bin/trimmomatic https://raw.githubusercontent.com/bioconda/bioconda-recipes/master/recipes/trimmomatic/trimmomatic.py && \
-   chmod 555 /opt/bin/trimmomatic && \
-   ln -s /usr/share/java/trimmomatic-0.39.jar /opt/bin/trimmomatic.jar
+# Use trimmomatic.py from bioconda to make shi7 happy
+COPY trimmomatic.py /opt/bin/trimmomatic
 
 # --------------------
 # Final apt cleanup
